@@ -1,0 +1,9 @@
+<h2>Paste your Code</h2>
+
+<p>
+<form method="POST" action="/">
+<input type="submit" value="Paste"><br />
+<textarea rows="30" cols="80"></textarea><br />
+<input type="submit" value="Paste"><br />
+</form>
+</p>
