@@ -1,0 +1,5 @@
+[% USE date %]
+[% url %][% id | uri | html %]<br />
+<b>Lang:</b> [% lang %]
+<b>Date:</b> [% date.format(time, '%Y-%m-%d %H:%M:%S') %]
+<pre>[% code %]</pre>

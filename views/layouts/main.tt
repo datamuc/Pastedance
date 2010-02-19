@@ -3,12 +3,13 @@
 <head>
 <title>Pastedance</title>
 <link rel="stylesheet" type="text/css" href="/css/style.css" />
+<link rel="stylesheet" type="text/css" href="/css/highlight.css" />
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 </head>
 <body>
 <h1>Pastedance</h1>
 <div id="content">
-<p><% content %></p>
+<p>[% content %]</p>
 </div>
 <div id="footer">
 Powered by <a href="http://dancer.sukria.net">Dancer</a> 
