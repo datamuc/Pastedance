@@ -4,18 +4,18 @@
 
 body.hl	{ background-color:#ffffff; }
 pre.hl	{ color:#000000; background-color:#ffffff; font-size:10pt; font-family:'Courier New';}
-.hl.num { color:#000000; }
-.hl.esc { color:#666666; }
-.hl.str { color:#666666; }
-.hl.dstr { color:#000000; }
-.hl.slc { color:#b30000; }
-.hl.com { color:#b30000; }
-.hl.dir { color:#0000b3; }
-.hl.sym { color:#000000; }
-.hl.line { color:#555555; }
+.hl.num { color:#006400; }
+.hl.esc { color:#2e8b57; }
+.hl.str { color:#006400; }
+.hl.dstr { color:#27408b; }
+.hl.slc { color:#000000; font-style:italic; }
+.hl.com { color:#000000; font-style:italic; }
+.hl.dir { color:#27408b; }
+.hl.sym { color:#000000; font-weight:bold; }
+.hl.line { color:#777777; }
 .hl.mark	{ background-color:#ffffbb;}
-.hl.kwa { color:#0000b3; }
-.hl.kwb { color:#4c73a6; }
-.hl.kwc { color:#0000b3; }
+.hl.kwa { color:#000000; font-weight:bold; }
+.hl.kwb { color:#a52a2a; font-weight:bold; }
+.hl.kwc { color:#dda0dd; font-weight:bold; }
 .hl.kwd { color:#000000; }
 

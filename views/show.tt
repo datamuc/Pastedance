@@ -2,4 +2,5 @@
 [% url %][% id | uri | html %]<br />
 <b>Lang:</b> [% lang %]
 <b>Date:</b> [% date.format(time, '%Y-%m-%d %H:%M:%S') %]
+<a href="[% url %]plain/[% id | uri | html %]">Plain</a>
 <pre>[% code %]</pre>
