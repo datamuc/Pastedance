@@ -1,19 +1,23 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en-US" xml:lang="en-US">
 <head>
-<META http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <title>Pastedance</title>
 <link rel="stylesheet" type="text/css" href="/css/style.css" />
 <link rel="stylesheet" type="text/css" href="/css/highlight.css" />
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 </head>
 <body>
-<h1>Pastedance</h1>
+<h1><a href="/">Pastedance</a></h1>
 <div id="content">
-<p>[% content %]</p>
+[% content %]
 </div>
 <div id="footer">
-Powered by <a href="http://dancer.sukria.net">Dancer</a> 
+Powered by <a href="http://dancer.sukria.net">Dancer</a> <br />
+Highlighting Engine is
+<a href="http://www.gnu.org/software/src-highlite/">GNU Source-highlight</a><br />
+Perl bindings for GNU Source-highlight provided by
+<a href="https://code.launchpad.net/~chust/+junk/SourceHighlight">murphy</a>. Thank you for this!
 </div>
 </body>
 </html>

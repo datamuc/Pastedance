@@ -10,289 +10,55 @@ engines:
 kioku:
   dir: pastebindb
 
-Syntaxmap:
-        - display: ABAP/4
-          value: abp
-        - display: Abstract
-          value: aspect
-        - display: Action Script
-          value: as
-        - display: ADA95
-          value: ada
-        - display: Agda
-          value: agda
-        - display: AMPL
-          value: ampl
-        - display: AMTrix
-          value: amtrix
-        - display: Apache Config
-          value: httpd
-        - display: AppleScript
-          value: applescript
-        - display: Applied Type System
-          value: ats
-        - display: Arc
-          value: arc
-        - display: ARM
-          value: arm
-        - display: ASCEND
-          value: a4c
-        - display: ASP
-          value: asp
-        - display: Assembler
-          value: asm
-        - display: AutoIt
-          value: au3
-        - display: Avenue
-          value: avenue
-        - display: Bash
-          value: sh
-        - display: BibTeX
-          value: bib
-        - display: Bison
-          value: y
-        - display: Blitz Basic
-          value: bb
-        - display: BM Script
-          value: bms
-        - display: C and C++
-          value: c
-        - display: C#
-          value: cs
-        - display: CHILL
-          value: chl
-        - display: ClearBasic
-          value: cb
-        - display: Clipper
-          value: clipper
-        - display: Clips
-          value: clp
-        - display: Clojure
-          value: clojure
-        - display: COBOL
-          value: cob
-        - display: ColdFusion MX
-          value: cfc
-        - display: CSS
-          value: css
-        - display: D
-          value: d
-        - display: Diff
-          value: diff
-        - display: DOS Batch
-          value: bat
-        - display: Dylan
-          value: dylan
-        - display: Eiffel
-          value: e
-        - display: Erlang
-          value: erl
-        - display: Euphoria
-          value: euphoria
-        - display: Express
-          value: exp
-        - display: FAME
-          value: inp
-        - display: Felix
-          value: flx
-        - display: Fortran 77
-          value: f77
-        - display: Fortran 90
-          value: f90
-        - display: Frink
-          value: frink
-        - display: (G)AWK
-          value: awk
-        - display: Graphviz
-          value: dot
-        - display: Haskell
-          value: haskell
-        - display: Haskell LHS
-          value: lhs
-        - display: Hecl
-          value: hcl
-        - display: Icon
-          value: icn
-        - display: IDL
-          value: idl
-        - display: Informix
-          value: 4gl
-        - display: INI
-          value: ini
-        - display: Inno Setup
-          value: iss
-        - display: Interactive Data Language
-          value: idlang
-        - display: INTERLIS
-          value: ili
-        - display: IO
-          value: io
-        - display: Jasmin
-          value: j
-        - display: Java
-          value: java
-        - display: Javascript
-          value: js
-        - display: JSP
-          value: jsp
-        - display: LDAP
-          value: ldif
-        - display: Lilypond
-          value: ly
-        - display: Linden Script
-          value: lsl
-        - display: Lisp
-          value: lisp
-        - display: Logtalk
-          value: lgt
-        - display: Lotos
-          value: lotos
-        - display: Lotus
-          value: ls
-        - display: Lua
-          value: lua
-        - display: Luban
-          value: lbn
-        - display: Make
-          value: make
-        - display: Maple
-          value: mpl
-        - display: Matlab
-          value: m
-        - display: MaxScript
-          value: ms
-        - display: Maya
-          value: mel
-        - display: Mercury
-          value: mercury
-        - display: Microsoft PowerShell
-          value: ps1
-        - display: Miranda
-          value: miranda
-        - display: Modelica
-          value: mo
-        - display: Modula3
-          value: mod3
-        - display: MSSQL
-          value: mssql
-        - display: Nasal
-          value: nas
-        - display: Nemerle
-          value: n
-        - display: NetRexx
-          value: nrx
-        - display: Nice
-          value: nice
-        - display: NSIS
-          value: nsi
-        - display: Oberon
-          value: oberon
-        - display: Objective Caml
-          value: ml
-        - display: Objective C
-          value: objc
-        - display: Object Script
-          value: os
-        - display: Octave
-          value: octave
-        - display: Open Object Rexx
-          value: oorexx
-        - display: Oz
-          value: oz
-        - display: Paradox
-          value: sc
-        - display: Pascal
-          value: pas
-        - display: PATROL
-          value: psl
-        - display: Perl
-          value: pl
-        - display: PHP
-          value: php
-        - display: Pike
-          value: pike
-        - display: PL/1
-          value: pl1
-        - display: Plain text
-          value: txt
-          default: 1
-        - display: PL/SQL
-          value: sql
-        - display: PostScript
-          value: ps
-        - display: POV-Ray
-          value: pov
-        - display: PowerPC Assembler
-          value: s
-        - display: Progress
-          value: progress
-        - display: Prolog
-          value: pro
-        - display: Pyrex
-          value: pyx
-        - display: Python
-          value: py
-        - display: QMake Project
-          value: qmake
-        - display: Qore
-          value: q
-        - display: Qu
-          value: qu
-        - display: Rebol
-          value: rebol
-        - display: Regex tests
-          value: test_re
-        - display: Relax NG
-          value: rnc
-        - display: Rexx
-          value: rexx
-        - display: RPM Spec
-          value: spec
-        - display: R
-          value: r
-        - display: Ruby
-          value: rb
-        - display: SAS
-          value: sas
-        - display: Scala
-          value: scala
-        - display: Scilab
-          value: scilab
-        - display: SMALL
-          value: sma
-        - display: Smalltalk
-          value: smalltalk
-        - display: SNMP
-          value: mib
-        - display: SNOBOL
-          value: sno
-        - display: SPIN SQL
-          value: spn
-        - display: Squirrel
-          value: nut
-        - display: Standard ML
-          value: sml
-        - display: SuperX++
-          value: xpp
-        - display: Sybase SQL
-          value: sybase
-        - display: Tcl/Tk
-          value: tcl
-        - display: TCSH
-          value: tcsh
-        - display: TeX and LaTeX
-          value: tex
-        - display: TTCN3
-          value: ttcn3
-        - display: Vala
-          value: vala
-        - display: Verilog
-          value: verilog
-        - display: VHDL
-          value: vhd
-        - display: Visual Basic
-          value: vb
-        - display: XML
-          value: xml
-        - display: Zonnon
-          value: znn
+langs:
+  C++: cpp.lang
+  m4: m4.lang
+  Ada: ada.lang
+  Makefile: makefile.lang
+  Bib: bib.lang
+  Bison: bison.lang
+  C: c.lang
+  CAML: caml.lang
+  changelog: changelog.lang
+  LaTeX: latex.lang
+  conf: conf.lang
+  C#: csharp.lang
+  Bourne Shell: sh.lang
+  CSS: css.lang
+  diff: diff.lang
+  XML: xml.lang
+  Postscript: postscript.lang
+  Fortran (Fixed): fixed-fortran.lang
+  Fortran (Free): fortran.lang
+  Flex: flex.lang
+  glSlang: glsl.lang
+  GLSL: glsl.lang
+  haXe: haxe.lang
+  HTML: html.lang
+  INI: desktop.lang
+  Java: java.lang
+  Javascript: javascript.lang
+  LDIF: ldap.lang
+  Logtalk: logtalk.lang
+  log: log.lang
+  Lua: lua.lang
+  Pascal: pascal.lang
+  Perl: perl.lang
+  PHP: php.lang
+  pkgconfig: pc.lang
+  Prolog: prolog.lang
+  properties: properties.lang
+  Python: python.lang
+  Ruby: ruby.lang
+  Scala: scala.lang
+  Shell: sh.lang
+  Slang: slang.lang
+  sml: sml.lang
+  RPM spec: spec.lang
+  SQL: sql.lang
+  syslog: log.lang
+  tcl/tk: tcl.lang
+  tcsh: sh.lang
+  txt: nohilite.lang
+  Xorg: xorg.lang
+  yacc: bison.lang

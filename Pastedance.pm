@@ -4,7 +4,8 @@ use Data::Dumper;
 use KiokuDB;
 use URI::Escape;
 use Data::Uniqid qw/uniqid/;
-use highlight;
+use lib '/opt/sh';
+use SourceHighlight;
 
 my $k = KiokuDB->connect(
   #"dbi:SQLite:dbname=pastedance.db",
@@ -13,25 +14,39 @@ my $k = KiokuDB->connect(
   create => 1,
 );
 
+my %expires = (
+  '1week'  => 604800,
+  '1day'   => 86400,
+  '1month' => 2678400,
+  never    => undef, 
+);
+
+
 # XXX Not sure about this: KiokuDB needs a scope object
 #     so this does create at least one per request... but
 #     not sure about its scope. :p
-before sub { var scope => $k->new_scope; };
+before sub {
+  var scope => $k->new_scope;
+  my $langs = config->{langs};
+  set revlangs => { reverse %{$langs} } unless exists config->{revlangs};
+};
 
 get '/' => sub {
-    template 'index', { syntaxes => config->{Syntaxmap} };
+    template 'index', { syntaxes => config->{langs} };
 };
 
 post '/' => sub {
     my $code = request->params->{code};
-    my $lang = request->params->{lang} || 'txt';
-    ($lang) = grep { $_ eq $lang } map { $_->{value} } @{ config->{Syntaxmap} };
-    $lang ||= 'txt';
+    my $lang = request->params->{lang};
+    if ( ! exists config->{langs}->{$lang} ) {
+       $lang = "txt";
+    }
 
     my $doc = {
-       code   => $code,
-       lang   => $lang,
-       'time' => time,
+       code    => $code,
+       lang    => $lang,
+       'time'  => time,
+       expires => $expires{request->params->{expires}} // $expires{'1week'},
     };
     my $id = $k->store(uniqid, $doc);
     redirect request->uri_for($id);
@@ -53,22 +68,20 @@ get '/plain/:id' => sub {
   return $doc->{code};
 };
 
+
 sub highlight {
   my $doc = shift;
-  my $ln = shift;
-  my $lang = $doc->{lang} || 'txt';
-  my $gen = highlightc::CodeGenerator_getInstance($highlightc::HTML);
-  $gen->initTheme('/opt/highlight/share/highlight/themes/ide-codewarrior.style');
-  $gen->loadLanguage("/opt/highlight/share/highlight/langDefs/${lang}.lang");
-  $gen->setEncoding('UTF-8');
-  $gen->setFragmentCode(1);
-  $gen->setHTMLInlineCSS(1);
-  $gen->setHTMLAttachAnchors(1);
-  $gen->setPrintLineNumbers($ln);
-  #$gen->setHTMLOrderedList(1);
-  my $output = $gen->generateString($doc->{code});
-  highlightc::CodeGenerator_deleteInstance($gen);
-  return $output;
+  my $ln  = shift;
+  my $lang = config->{langs}->{$doc->{lang}} // 'nohilite.lang';
+
+  my $hl = SourceHighlight::SourceHighlight->new('html.outlang');
+  if($ln) {
+    $hl->setGenerateLineNumbers(1);
+    $hl->setLineNumberPad(' ');
+    $hl->setGenerateLineNumberRefs(1);
+    $hl->setLineNumberAnchorPrefix('l');
+  }
+  return $hl->highlightString($doc->{code}, $lang);
 }
 
 true;

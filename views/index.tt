@@ -2,8 +2,10 @@
 
 <form action="/" method="POST">
 <select name="lang">
-[% FOR lang IN syntaxes %]
-<option [% IF lang.default %]selected="selected"[% END %] value="[% lang.value | html %]">[% lang.display | html %]</option>
+[% FOREACH lang IN syntaxes.keys.sort %]
+<option [% IF lang == "txt" %]selected="selected"[% END %] value="[% lang | html %]">
+[% lang | html %]
+</option>
 [% END %]
 </select>
 <input type="submit" value="Paste"><br />
