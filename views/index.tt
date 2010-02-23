@@ -1,14 +1,23 @@
 <h2>Paste your code!</h2>
 Size limit ~ 100kB
+
 <form action="/" method="POST">
-<select name="lang">
+Subject: <input size="60" type="text" name="subject" /><br />
+Syntax: <select name="lang">
 [% FOREACH lang IN syntaxes.keys.sort %]
 <option [% IF lang == "txt" %]selected="selected"[% END %] value="[% lang | html %]">
 [% lang | html %]
 </option>
 [% END %]
 </select>
-<input type="submit" value="Paste"><br />
-<textarea name="code" rows="30" cols="80"></textarea><br />
-<input type="submit" value="Paste"><br />
+Expires: <select name="expires">
+[% FOREACH e IN expires.keys %]
+<option
+[% IF e == "1 week" %]selected="selected"[% END %] value="[% e | html %]">
+[% e | html %]</option>
+[% END %]
+</select>
+<input type="submit" value="Paste" /><br />
+<textarea name="code" rows="30" cols="80" /></textarea><br />
+<input type="submit" value="Paste" /><br />
 </form>

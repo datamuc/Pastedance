@@ -15,10 +15,10 @@ my $k = KiokuDB->connect(
 );
 
 my %expires = (
-  '1week'  => 604800,
-  '1day'   => 86400,
-  '1month' => 2678400,
-  never    => undef, 
+  '1 week'  => 604800,
+  '1 day'   => 86400,
+  '1 month' => 2678400,
+  never    => -1,
 );
 
 
@@ -32,12 +32,16 @@ before sub {
 };
 
 get '/' => sub {
-    template 'index', { syntaxes => config->{langs} };
+    template 'index', { syntaxes => config->{langs}, expires => \%expires };
 };
 
 post '/' => sub {
     my $code = request->params->{code};
     my $lang = request->params->{lang};
+    my $subject = request->params->{subject};
+    unless(length($code)) {
+      return "don't paste no code" unless length($code);
+    }
     if ( ! exists config->{langs}->{$lang} ) {
        $lang = "txt";
     }
@@ -45,8 +49,9 @@ post '/' => sub {
     my $doc = {
        code    => $code,
        lang    => $lang,
+       subject => $subject,
        'time'  => time,
-       expires => $expires{request->params->{expires}} // $expires{'1week'},
+       expires => $expires{request->params->{expires}} // $expires{'1 week'},
     };
     my $id = $k->store(uniqid, $doc);
     redirect request->uri_for($id);
@@ -67,6 +72,15 @@ get '/plain/:id' => sub {
   content_type 'text/plain; charset=UTF-8';
   return $doc->{code};
 };
+
+print Dumper(config);
+#if(config->{environment} eq "development") {
+#  get '/dump/:id' => sub {
+#    content_type 'text/plain; charset=UTF-8';
+#    my $doc = $k->lookup(params->{id});
+#    return Dumper($doc)."\n".Dumper(config);
+#  };
+#}
 
 
 sub highlight {

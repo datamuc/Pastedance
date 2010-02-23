@@ -1,10 +1,20 @@
 [% USE date %]
 <p>
 [% url %][% id | uri | html %]<br />
-<b>Lang:</b> [% lang %]
 <b>Date:</b> [% date.format(time, '%Y-%m-%d %H:%M:%S') %]
-<a href="[% url %]plain/[% id | uri | html %]">Plain</a>
+<b>Expires:</b>
+[% expires %]
+
+[% IF expires != '-1' %]
+[% date.format(time + expires, '%Y-%m-%d %H:%M:%S') %]
+[% ELSE %]
+never
+[% END %]<br />
+
+<b>Subject:</b> [% subject | html %] <b>Lang:</b> [% lang %]
+<a href="[% url %]plain/[% id | uri | html %]">Plain</a><br />
 </p>
+<hr />
 <div style="font-family: monospace">
 [% code %]
 </div>
