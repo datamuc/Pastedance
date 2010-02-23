@@ -1,6 +1,7 @@
 layout: "main"
 logger: "file"
 template: template_toolkit
+environment: production
 
 engines:
   template_toolkit:
@@ -13,6 +14,7 @@ kioku:
 langs:
   C++: cpp.lang
   m4: m4.lang
+  Haskell: haskell.lang
   Ada: ada.lang
   Makefile: makefile.lang
   Bib: bib.lang
@@ -62,3 +64,10 @@ langs:
   txt: nohilite.lang
   Xorg: xorg.lang
   yacc: bison.lang
+  VB Script: vbscript.lang
+  Erlang: erlang.lang 
+  Assembler: asm.lang
+  Applescript: applescript.lang
+  DOS Batch: bat.lang 
+  D: d.lang
+  COBOL: cobol.lang

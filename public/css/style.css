@@ -1,6 +1,7 @@
 body {
     font-family: Lucida,sans-serif;   
     color: #eee;
+    font-size: 12px;
     background-color: #1f1b1a;
 }
 
@@ -29,6 +30,6 @@ h1 {
 }
 
 pre {
-    font-family: \"lucida console\",\"monaco\",\"andale mono\",\"bitstream vera sans mono\",\"consolas\",monospace;
+    font-family: \"inconsolata\",\"lucida console\",\"monaco\",\"andale mono\",\"bitstream vera sans mono\",\"consolas\",monospace;
 }
 

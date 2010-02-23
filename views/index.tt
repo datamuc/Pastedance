@@ -1,5 +1,5 @@
 <h2>Paste your code!</h2>
-
+Size limit ~ 100kB
 <form action="/" method="POST">
 <select name="lang">
 [% FOREACH lang IN syntaxes.keys.sort %]

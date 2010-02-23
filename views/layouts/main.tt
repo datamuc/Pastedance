@@ -14,7 +14,7 @@
 </div>
 <div id="footer">
 Powered by <a href="http://dancer.sukria.net">Dancer</a> <br />
-Highlighting Engine is
+Highlighting engine is
 <a href="http://www.gnu.org/software/src-highlite/">GNU Source-highlight</a><br />
 Perl bindings for GNU Source-highlight provided by
 <a href="https://code.launchpad.net/~chust/+junk/SourceHighlight">murphy</a>. Thank you for this!

@@ -73,7 +73,7 @@ sub highlight {
   my $doc = shift;
   my $ln  = shift;
   my $lang = config->{langs}->{$doc->{lang}} // 'nohilite.lang';
-
+  $doc->{code} =~ s/\t/        /g;
   my $hl = SourceHighlight::SourceHighlight->new('html.outlang');
   if($ln) {
     $hl->setGenerateLineNumbers(1);
