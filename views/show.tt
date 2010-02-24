@@ -3,15 +3,14 @@
 [% url %][% id | uri | html %]<br />
 <b>Date:</b> [% date.format(time, '%Y-%m-%d %H:%M:%S') %]
 <b>Expires:</b>
-[% expires %]
-
 [% IF expires != '-1' %]
 [% date.format(time + expires, '%Y-%m-%d %H:%M:%S') %]
 [% ELSE %]
 never
 [% END %]<br />
 
-<b>Subject:</b> [% subject | html %] <b>Lang:</b> [% lang %]
+[% IF subject %]
+<b>Subject:</b> [% subject | html %] [% END %]<b>Lang:</b> [% lang %]
 <a href="[% url %]plain/[% id | uri | html %]">Plain</a><br />
 </p>
 <hr />

@@ -59,6 +59,7 @@ post '/' => sub {
 
 get '/:id' => sub {
     my $doc = $k->lookup(params->{id});
+    return e404() unless $doc;
     my $ln = request->params->{ln};
     $ln = defined($ln) ? $ln : 1;
     $doc->{url} = request->uri_for('/');
@@ -69,11 +70,12 @@ get '/:id' => sub {
 
 get '/plain/:id' => sub {
   my $doc = $k->lookup(params->{id});
+  return e404() unless $doc;
   content_type 'text/plain; charset=UTF-8';
   return $doc->{code};
 };
 
-print Dumper(config);
+#print Dumper(config);
 #if(config->{environment} eq "development") {
 #  get '/dump/:id' => sub {
 #    content_type 'text/plain; charset=UTF-8';
@@ -96,6 +98,12 @@ sub highlight {
     $hl->setLineNumberAnchorPrefix('l');
   }
   return $hl->highlightString($doc->{code}, $lang);
+}
+
+sub e404 {
+  status '404';
+  content_type 'text/plain';
+  return "Not found";
 }
 
 true;
