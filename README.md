@@ -19,3 +19,8 @@ Running
 =======
 
     ./Pastedance.pl
+
+Notes
+=====
+* You can see Pastedance in action here: <http://pb.rbfh.de/>
+* An [App::Nopaste plugin](http://github.com/datamuc/App-Nopaste-Service-Pastedance) for Pastedance is also available

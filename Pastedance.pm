@@ -36,7 +36,7 @@ get '/' => sub {
 };
 
 post '/' => sub {
-    my $code = request->params->{code};
+    chomp(my $code = request->params->{code});
     my $lang = request->params->{lang};
     my $subject = request->params->{subject};
     unless(length($code)) {
@@ -47,7 +47,7 @@ post '/' => sub {
     }
 
     my $doc = {
-       code    => $code,
+       code    => decode('UTF-8', $code),
        lang    => $lang,
        subject => $subject,
        'time'  => time,
