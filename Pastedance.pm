@@ -5,6 +5,7 @@ use KiokuDB;
 use URI::Escape;
 use Data::Uniqid qw/uniqid/;
 use lib '/opt/sh';
+use Encode qw/decode encode/;
 use SourceHighlight;
 
 my $k = KiokuDB->connect(
