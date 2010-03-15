@@ -1,7 +1,7 @@
 layout: "main"
 logger: "file"
 template: template_toolkit
-environment: production
+environment: development
 
 engines:
   template_toolkit:
