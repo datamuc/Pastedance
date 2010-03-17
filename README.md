@@ -5,6 +5,7 @@ Prerequisites
 * perl
   * Dancer
   * DateTime
+  * Data::Uniqid
   * MongoDB
   * perl bindings for source-highlight:  
     https://code.launchpad.net/~chust/+junk/SourceHighlight
@@ -13,7 +14,7 @@ Prerequisites
 Installation
 ============
 
-    cpan Dancer MongoDB Template DateTime
+    cpan Dancer MongoDB Template DateTime Data::Uniqid
 
 Running
 =======

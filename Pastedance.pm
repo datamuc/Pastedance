@@ -1,3 +1,4 @@
+# vim: sw=4 ai si et
 package Pastedance;
 use Dancer;
 use Data::Dumper;
@@ -9,18 +10,27 @@ use lib '/opt/sh';
 use Encode qw/decode encode/;
 use SourceHighlight;
 
-my $mongo = MongoDB::Connection->new(host => 'localhost', port => 27017);
-my $database   = $mongo->get_database('Pastedance');
+#
+# Database setup
+#
+my $mongo = MongoDB::Connection->new(
+    host => config->{mongo}->{host},
+    port => config->{mongo}->{port},
+);
+if(config->{mongo}->{auth}) {
+    my $return = $mongo->authenticate(
+        config->{mongo}->{database},
+        config->{mongo}->{auth}->{user},
+        config->{mongo}->{auth}->{password},
+    );
+    die("authentication failed") unless(ref $return && $return->{ok});
+}
+my $database   = $mongo->get_database(config->{mongo}->{database});
 my $collection = $database->get_collection('Pastedance');
 
 
-my %expires = (
-  '1 week'  => 604800,
-  '1 day'   => 86400,
-  '1 month' => 2678400,
-  never    => -1,
-);
 
+my %expires = %{ config->{expires} };
 
 get '/' => sub {
     template 'index', { syntaxes => config->{langs}, expires => \%expires };
