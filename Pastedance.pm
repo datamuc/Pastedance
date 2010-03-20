@@ -13,16 +13,6 @@ use Syntax::Highlight::Perl::Improved;
 use KiokuDB::Backend::MongoDB;
 use MongoDB;
 
-# my $conn = MongoDB::Connection->new(host => 'localhost');
-# my $mongodb    = $conn->get_database('Pastedance');
-# my $collection = $mongodb->get_collection('Pastedance');
-# my $mongo = KiokuDB::Backend::MongoDB->new('collection' => $collection);
-# 
-# my $k = KiokuDB->new(
-#   backend => $mongo
-# );
-# 
-
 #
 # Database setup
 #
@@ -130,23 +120,23 @@ sub perl_highlight {
           'Comment_Normal'    => 'color:#006699;font-style:italic;',
           'Comment_POD'       => 'color:#001144;font-style:italic;',
           'Directive'         => 'color:#339999;font-style:italic;',
-          'Label'             => 'color:#993399;font-style:italic;',
+          'Label'             => 'color:#772277;font-style:italic;',
           'Quote'             => 'color:#0000aa;',
           'String'            => 'color:#0000aa;',
-          'Subroutine'        => 'color:#998800;',
+          'Subroutine'        => 'color:#554400;',
           'Variable_Scalar'   => 'color:#008800;',
-          'Variable_Array'    => 'color:#ff7700;',
-          'Variable_Hash'     => 'color:#8800ff;',
-          'Variable_Typeglob' => 'color:#ff0033;',
+          'Variable_Array'    => 'color:#CC7700;',
+          'Variable_Hash'     => 'color:#8800CC;',
+          'Variable_Typeglob' => 'color:#CC0033;',
           'Whitespace'        => '',
           'Character'         => 'color:#880000;',
           'Keyword'           => 'color:#000000;',
           'Builtin_Operator'  => 'color:#330000;',
           'Builtin_Function'  => 'color:#000011;',
           'Operator'          => 'color:#000000;',
-          'Bareword'          => 'color:#33AA33;',
+          'Bareword'          => 'color:#338833;',
           'Package'           => 'color:#990000;',
-          'Number'            => 'color:#ff00ff;',
+          'Number'            => 'color:#BB00BB;',
           'Symbol'            => 'color:#000000;',
           'CodeTerm'          => 'color:#000000;',
           'DATA'              => 'color:#000000;',
@@ -163,8 +153,21 @@ sub perl_highlight {
     #$str = '<PRE style="font-size:10pt;color:#333366;">';
   }
 
-  my @lines = $formatter->format_string($doc->{code});
-  return '<pre>'.join("",@lines).'</pre>';
+  my @formatted = $formatter->format_string($doc->{code});
+  my ($code) = @formatted;
+  my $line_num = ($code =~ tr/\n//) + 1;
+  my $lines = join( "\n",
+    map { sprintf( "\%@{[length($line_num)]}d:", $_ ) } 1 .. $line_num );
+  return qq{
+    <table>
+     <tr>
+      <td style="padding-right: 10px">
+      <pre>$lines</pre>
+      </td>
+       <td><pre>$code</pre>
+      </td>
+     </table>
+  };
 }
 
 sub e404 {
