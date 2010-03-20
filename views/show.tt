@@ -1,10 +1,10 @@
 [% USE date %]
 <p>
 [% url %][% id | uri | html %]<br />
-<b>Date:</b> [% date.format(time, '%Y-%m-%d %H:%M:%S') %]
+<b>Date:</b> [% time.strftime('%Y-%m-%d %H:%M:%S') %]
 <b>Expires:</b>
-[% IF expires != '-1' %]
-[% date.format(time + expires, '%Y-%m-%d %H:%M:%S') %]
+[% IF ! expires.is_negative %]
+[% time.add(expires).strftime('%Y-%m-%d %H:%M:%S') %]
 [% ELSE %]
 never
 [% END %]<br />

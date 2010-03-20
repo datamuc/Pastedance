@@ -1,7 +1,9 @@
+# vim: sw=4 ai si et
 package Pastedance;
 use Dancer;
 use Data::Dumper;
-use KiokuDB;
+use MongoDB;
+use DateTime;
 use URI::Escape;
 use Data::Uniqid qw/uniqid/;
 use lib '/opt/sh';
@@ -21,29 +23,27 @@ use MongoDB;
 # );
 # 
 
-my $k = KiokuDB->connect(
-  #"dbi:SQLite:dbname=pastedance.db",
-  'bdb:dir=pastebindb',
-  transactions=>0,
-  create => 1,
+#
+# Database setup
+#
+my $mongo = MongoDB::Connection->new(
+    host => config->{mongo}->{host},
+    port => config->{mongo}->{port},
 );
+if(config->{mongo}->{auth}) {
+    my $return = $mongo->authenticate(
+        config->{mongo}->{database},
+        config->{mongo}->{auth}->{user},
+        config->{mongo}->{auth}->{password},
+    );
+    die("authentication failed") unless(ref $return && $return->{ok});
+}
+my $database   = $mongo->get_database(config->{mongo}->{database});
+my $collection = $database->get_collection('Pastedance');
 
-my %expires = (
-  '1 week'  => 604800,
-  '1 day'   => 86400,
-  '1 month' => 2678400,
-  never    => -1,
-);
 
 
-# XXX Not sure about this: KiokuDB needs a scope object
-#     so this does create at least one per request... but
-#     not sure about its scope. :p
-before sub {
-  var scope => $k->new_scope;
-  my $langs = config->{langs};
-  set revlangs => { reverse %{$langs} } unless exists config->{revlangs};
-};
+my %expires = %{ config->{expires} };
 
 get '/' => sub {
     template 'index', { syntaxes => config->{langs}, expires => \%expires };
@@ -61,29 +61,32 @@ post '/' => sub {
     }
 
     my $doc = {
+       id      => uniqid,
        code    => decode('UTF-8', $code),
        lang    => $lang,
        subject => $subject,
        'time'  => time,
        expires => $expires{request->params->{expires}} // $expires{'1 week'},
     };
-    my $id = $k->store(uniqid, $doc);
-    redirect request->uri_for($id);
+    my $id = $collection->insert($doc);
+    redirect request->uri_for($doc->{id});
 };
 
 get '/:id' => sub {
-    my $doc = $k->lookup(params->{id});
+    my $doc = $collection->find_one({id => params->{id}});
     return e404() unless $doc;
     my $ln = request->params->{ln};
     $ln = defined($ln) ? $ln : 1;
     $doc->{url} = request->uri_for('/');
     $doc->{id}  = params->{id};
     $doc->{code} = highlight($doc, $ln);
+    $doc->{'time'} = DateTime->from_epoch( epoch => $doc->{time} ),
+    $doc->{expires} = DateTime::Duration->new( seconds => $doc->{expires} ),
     template 'show', $doc;
 };
 
 get '/plain/:id' => sub {
-  my $doc = $k->lookup(params->{id});
+  my $doc = $collection->find_one({id => params->{id}});
   return e404() unless $doc;
   content_type 'text/plain; charset=UTF-8';
   return $doc->{code};
