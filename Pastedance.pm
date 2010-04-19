@@ -41,7 +41,7 @@ post '/' => sub {
     my $lang = request->params->{lang};
     my $subject = request->params->{subject};
     unless(length($code)) {
-      return "don't paste no code" unless length($code);
+      return "don't paste no code"
     }
     if ( ! exists config->{langs}->{$lang} ) {
        $lang = "txt";
