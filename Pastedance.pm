@@ -85,98 +85,10 @@ get '/lexers/' => sub {
   return join("\n", keys %{ get_lexers() });
 };
 
-#print Dumper(config);
-#if(config->{environment} eq "development") {
-#  get '/dump/:id' => sub {
-#    content_type 'text/plain; charset=UTF-8';
-#    my $doc = $k->lookup(params->{id});
-#    return Dumper($doc)."\n".Dumper(config);
-#  };
-#}
-
 sub pygments_highlight {
    my $doc = shift;
    my $ln  = shift;
    return py_highlight($doc->{code}, get_lexers()->{$doc->{lang}});
-}
-
-
-sub highlight {
-  my $doc = shift;
-  my $ln  = shift;
-  warn "xxx " .$doc->{code};
-  if($doc->{lang} eq "Perl") {
-    return perl_highlight($doc, $ln);
-  }
-  my $lang = config->{langs}->{$doc->{lang}} // 'nohilite.lang';
-  $doc->{code} =~ s/\t/        /g;
-  my $hl = Syntax::SourceHighlight::SourceHighlight->new('html.outlang');
-  if($ln) {
-    $hl->setGenerateLineNumbers(1);
-    $hl->setLineNumberPad(' ');
-    $hl->setGenerateLineNumberRefs(1);
-    $hl->setLineNumberAnchorPrefix('l');
-  }
-  return $hl->highlightString($doc->{code}, $lang);
-}
-
-sub perl_highlight {
-  my $doc = shift;
-  my $ln  = shift;
-  
-  warn "xxx " .$doc->{code};
-  my %default_styles = (
-          'Comment_Normal'    => 'color:#006699;font-style:italic;',
-          'Comment_POD'       => 'color:#001144;font-style:italic;',
-          'Directive'         => 'color:#339999;font-style:italic;',
-          'Label'             => 'color:#772277;font-style:italic;',
-          'Quote'             => 'color:#0000aa;',
-          'String'            => 'color:#0000aa;',
-          'Subroutine'        => 'color:#554400;',
-          'Variable_Scalar'   => 'color:#008800;',
-          'Variable_Array'    => 'color:#CC7700;',
-          'Variable_Hash'     => 'color:#8800CC;',
-          'Variable_Typeglob' => 'color:#CC0033;',
-          'Whitespace'        => '',
-          'Character'         => 'color:#880000;',
-          'Keyword'           => 'color:#000000;',
-          'Builtin_Operator'  => 'color:#330000;',
-          'Builtin_Function'  => 'color:#000011;',
-          'Operator'          => 'color:#000000;',
-          'Bareword'          => 'color:#338833;',
-          'Package'           => 'color:#990000;',
-          'Number'            => 'color:#BB00BB;',
-          'Symbol'            => 'color:#000000;',
-          'CodeTerm'          => 'color:#000000;',
-          'DATA'              => 'color:#000000;',
-          'LineNumber'        => 'color:#CCCCCC;'
-  );
-
-  my $formatter = new Syntax::Highlight::Perl::Improved;
-  $formatter->define_substitution(
-    '<' => '&lt;', '>' => '&gt;', '&' => '&amp;'
-  ); 
-
-  while ( my($type,$style) = each %default_styles ) {
-    $formatter->set_format($type, [ "<span style=\"$style\">",'</span>' ] );
-    #$str = '<PRE style="font-size:10pt;color:#333366;">';
-  }
-
-  my @formatted = $formatter->format_string($doc->{code});
-  my ($code) = @formatted;
-  my $line_num = ($code =~ tr/\n//) + 1;
-  my $lines = join( "\n",
-    map { sprintf( "\%@{[length($line_num)]}d:", $_ ) } 1 .. $line_num );
-  return qq{
-    <table>
-     <tr>
-      <td style="padding-right: 10px">
-      <pre>$lines</pre>
-      </td>
-       <td><pre>$code</pre>
-      </td>
-     </table>
-  };
 }
 
 sub e404 {
