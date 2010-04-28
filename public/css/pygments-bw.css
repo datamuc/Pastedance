@@ -1,0 +1,35 @@
+.pygments .hll { background-color: #ffffcc }
+.pygments  { background: #ffffff; }
+.pygments .c { font-style: italic } /* Comment */
+.pygments .err { border: 1px solid #FF0000 } /* Error */
+.pygments .k { font-weight: bold } /* Keyword */
+.pygments .cm { font-style: italic } /* Comment.Multiline */
+.pygments .c1 { font-style: italic } /* Comment.Single */
+.pygments .cs { font-style: italic } /* Comment.Special */
+.pygments .ge { font-style: italic } /* Generic.Emph */
+.pygments .gh { font-weight: bold } /* Generic.Heading */
+.pygments .gp { font-weight: bold } /* Generic.Prompt */
+.pygments .gs { font-weight: bold } /* Generic.Strong */
+.pygments .gu { font-weight: bold } /* Generic.Subheading */
+.pygments .kc { font-weight: bold } /* Keyword.Constant */
+.pygments .kd { font-weight: bold } /* Keyword.Declaration */
+.pygments .kn { font-weight: bold } /* Keyword.Namespace */
+.pygments .kr { font-weight: bold } /* Keyword.Reserved */
+.pygments .s { font-style: italic } /* Literal.String */
+.pygments .nc { font-weight: bold } /* Name.Class */
+.pygments .ni { font-weight: bold } /* Name.Entity */
+.pygments .ne { font-weight: bold } /* Name.Exception */
+.pygments .nn { font-weight: bold } /* Name.Namespace */
+.pygments .nt { font-weight: bold } /* Name.Tag */
+.pygments .ow { font-weight: bold } /* Operator.Word */
+.pygments .sb { font-style: italic } /* Literal.String.Backtick */
+.pygments .sc { font-style: italic } /* Literal.String.Char */
+.pygments .sd { font-style: italic } /* Literal.String.Doc */
+.pygments .s2 { font-style: italic } /* Literal.String.Double */
+.pygments .se { font-weight: bold; font-style: italic } /* Literal.String.Escape */
+.pygments .sh { font-style: italic } /* Literal.String.Heredoc */
+.pygments .si { font-weight: bold; font-style: italic } /* Literal.String.Interpol */
+.pygments .sx { font-style: italic } /* Literal.String.Other */
+.pygments .sr { font-style: italic } /* Literal.String.Regex */
+.pygments .s1 { font-style: italic } /* Literal.String.Single */
+.pygments .ss { font-style: italic } /* Literal.String.Symbol */
