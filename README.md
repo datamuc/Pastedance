@@ -6,6 +6,8 @@ Prerequisites
   * Dancer
   * DateTime
   * Data::Uniqid
+  * Inline::Python
+    * pygments in your python installation
   * MongoDB
   * perl bindings for source-highlight:  
     https://code.launchpad.net/~chust/+junk/SourceHighlight
