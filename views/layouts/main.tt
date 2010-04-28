@@ -4,7 +4,8 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <title>Pastedance</title>
 <link rel="stylesheet" type="text/css" href="/css/style.css" />
-<link rel="stylesheet" type="text/css" href="/css/highlight.css" />
+<!-- <link rel="stylesheet" type="text/css" href="/css/highlight.css" /> -->
+<link rel="stylesheet" type="text/css" href="/css/pygments-default.css" />
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 </head>
 <body>

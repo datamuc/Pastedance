@@ -6,9 +6,9 @@ use MongoDB;
 use DateTime;
 use URI::Escape;
 use Data::Uniqid qw/uniqid/;
-use lib '/opt/sh';
+#use lib '/opt/sh';
 use Encode qw/decode encode/;
-use SourceHighlight;
+use Syntax::SourceHighlight;
 use Syntax::Highlight::Perl::Improved;
 use KiokuDB::Backend::MongoDB;
 use MongoDB;
@@ -31,12 +31,10 @@ if(config->{mongo}->{auth}) {
 my $database   = $mongo->get_database(config->{mongo}->{database});
 my $collection = $database->get_collection('Pastedance');
 
-
-
 my %expires = %{ config->{expires} };
 
 get '/' => sub {
-    template 'index', { syntaxes => config->{langs}, expires => \%expires };
+    template 'index', { syntaxes => get_lexers(), expires => \%expires };
 };
 
 post '/' => sub {
@@ -46,7 +44,7 @@ post '/' => sub {
     unless(length($code)) {
       return "don't paste no code"
     }
-    if ( ! exists config->{langs}->{$lang} ) {
+    if ( ! exists get_lexers()->{$lang} ) {
        $lang = "txt";
     }
 
@@ -69,17 +67,22 @@ get '/:id' => sub {
     $ln = defined($ln) ? $ln : 1;
     $doc->{url} = request->uri_for('/');
     $doc->{id}  = params->{id};
-    $doc->{code} = highlight($doc, $ln);
+    $doc->{code} = pygments_highlight($doc, $ln);
     $doc->{'time'} = DateTime->from_epoch( epoch => $doc->{time} ),
     $doc->{expires} = DateTime::Duration->new( seconds => $doc->{expires} ),
-    template 'show', $doc;
+    encode('UTF-8', template 'show', $doc);
 };
 
 get '/plain/:id' => sub {
   my $doc = $collection->find_one({id => params->{id}});
   return e404() unless $doc;
   content_type 'text/plain; charset=UTF-8';
-  return $doc->{code};
+  return encode('UTF-8', $doc->{code});
+};
+
+get '/lexers/' => sub {
+  content_type 'text/plain; charset=UTF-8';
+  return join("\n", keys %{ get_lexers() });
 };
 
 #print Dumper(config);
@@ -91,6 +94,12 @@ get '/plain/:id' => sub {
 #  };
 #}
 
+sub pygments_highlight {
+   my $doc = shift;
+   my $ln  = shift;
+   return py_highlight($doc->{code}, get_lexers()->{$doc->{lang}});
+}
+
 
 sub highlight {
   my $doc = shift;
@@ -101,7 +110,7 @@ sub highlight {
   }
   my $lang = config->{langs}->{$doc->{lang}} // 'nohilite.lang';
   $doc->{code} =~ s/\t/        /g;
-  my $hl = SourceHighlight::SourceHighlight->new('html.outlang');
+  my $hl = Syntax::SourceHighlight::SourceHighlight->new('html.outlang');
   if($ln) {
     $hl->setGenerateLineNumbers(1);
     $hl->setLineNumberPad(' ');
@@ -175,6 +184,33 @@ sub e404 {
   content_type 'text/plain';
   return "Not found";
 }
+
+use Inline Python => << 'EOP';
+from pygments import highlight
+from pygments.lexers import get_lexer_by_name
+from pygments.formatters import HtmlFormatter
+from pygments.lexers import get_all_lexers
+
+#code = 'print "Hello World"'
+#print highlight(code, PythonLexer(), HtmlFormatter())
+
+def get_lexers():
+  r = {}
+  lexers = get_all_lexers()
+  for l in lexers:
+    r[l[0]] = l[1][0]
+  return r
+
+def py_highlight(code, lang):
+  try:
+    lexer = get_lexer_by_name(lang)
+  except:
+    lexer = get_lexer_by_name('txt')
+
+  formatter = HtmlFormatter(linenos=True)
+  return highlight(code, lexer, formatter)
+
+EOP
 
 true;
 
