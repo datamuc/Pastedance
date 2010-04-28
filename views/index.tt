@@ -5,7 +5,8 @@ Size limit ~ 100kB
 Subject: <input size="60" type="text" name="subject" /><br />
 Syntax: <select name="lang">
 [% FOREACH lang IN syntaxes.keys.sort %]
-<option [% IF lang == "txt" %]selected="selected"[% END %] value="[% lang | html %]">
+<option [% IF lang == "Text only" %]selected="selected"[% END %]
+  value="[% syntaxes.$lang | html %]">
 [% lang | html %]
 </option>
 [% END %]

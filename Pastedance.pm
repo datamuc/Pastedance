@@ -34,7 +34,8 @@ my $collection = $database->get_collection('Pastedance');
 my %expires = %{ config->{expires} };
 
 get '/' => sub {
-    template 'index', { syntaxes => get_lexers(), expires => \%expires };
+    encode('utf-8',
+      template 'index', { syntaxes => get_lexers(), expires => \%expires });
 };
 
 post '/' => sub {
@@ -44,7 +45,8 @@ post '/' => sub {
     unless(length($code)) {
       return "don't paste no code"
     }
-    if ( ! exists get_lexers()->{$lang} ) {
+    my %rlex = reverse %{ get_lexers() };
+    if ( ! exists $rlex{$lang} ) {
        $lang = "txt";
     }
 
@@ -88,7 +90,7 @@ get '/lexers/' => sub {
 sub pygments_highlight {
    my $doc = shift;
    my $ln  = shift;
-   return py_highlight($doc->{code}, get_lexers()->{$doc->{lang}});
+   return py_highlight($doc->{code}, $doc->{lang});
 }
 
 sub e404 {
@@ -99,12 +101,8 @@ sub e404 {
 
 use Inline Python => << 'EOP';
 from pygments import highlight
-from pygments.lexers import get_lexer_by_name
 from pygments.formatters import HtmlFormatter
-from pygments.lexers import get_all_lexers
-
-#code = 'print "Hello World"'
-#print highlight(code, PythonLexer(), HtmlFormatter())
+from pygments.lexers import get_lexer_by_name, get_all_lexers
 
 def get_lexers():
   r = {}

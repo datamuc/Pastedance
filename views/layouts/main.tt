@@ -5,7 +5,10 @@
 <title>Pastedance</title>
 <link rel="stylesheet" type="text/css" href="/css/style.css" />
 <!-- <link rel="stylesheet" type="text/css" href="/css/highlight.css" /> -->
-<link rel="stylesheet" type="text/css" href="/css/pygments-default.css" />
+<link rel="stylesheet" type="text/css" href="/css/pygments-native.css" />
+<style type="text/css"><!--
+.pygments .linenodiv { padding-right: 7px }
+--></style></style>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 </head>
 <body>
@@ -15,10 +18,6 @@
 </div>
 <div id="footer">
 Powered by <a href="http://dancer.sukria.net">Dancer</a> <br />
-Highlighting Engine is
-<a href="http://www.gnu.org/software/src-highlite/">GNU Source-highlight</a><br />
-Perl bindings for GNU Source-highlight provided by
-<a href="https://code.launchpad.net/~chust/+junk/SourceHighlight">murphy</a>. Thank you for this!
 </div>
 </body>
 </html>

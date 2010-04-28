@@ -14,6 +14,6 @@ never
 <a href="[% url %]plain/[% id | uri | html %]">Plain</a><br />
 </p>
 <hr />
-<div style="font-family: monospace">
+<div style="font-family: monospace" class="pygments">
 [% code %]
 </div>
