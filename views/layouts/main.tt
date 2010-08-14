@@ -5,7 +5,7 @@
 <title>Pastedance</title>
 <link rel="stylesheet" type="text/css" href="/css/style.css" />
 <!-- <link rel="stylesheet" type="text/css" href="/css/highlight.css" /> -->
-<link rel="stylesheet" type="text/css" href="/css/pygments-native.css" />
+<link rel="stylesheet" type="text/css" href="/css/pygments-emacs.css" />
 <style type="text/css"><!--
 .pygments .linenodiv { padding-right: 7px }
 --></style></style>

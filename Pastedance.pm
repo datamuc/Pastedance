@@ -84,7 +84,7 @@ get '/plain/:id' => sub {
 
 get '/lexers/' => sub {
   content_type 'text/plain; charset=UTF-8';
-  return join("\n", keys %{ get_lexers() });
+  return join("\n", sort keys %{ get_lexers() });
 };
 
 sub pygments_highlight {
@@ -115,9 +115,9 @@ def py_highlight(code, lang):
   try:
     lexer = get_lexer_by_name(lang)
   except:
-    lexer = get_lexer_by_name('txt')
+    lexer = get_lexer_by_name('text')
 
-  formatter = HtmlFormatter(linenos=True)
+  formatter = HtmlFormatter(linenos=True, lineanchors='l', anchorlinenos=True)
   return highlight(code, lexer, formatter)
 
 EOP
