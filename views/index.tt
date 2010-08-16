@@ -2,7 +2,7 @@
 Size limit ~ 100kB
 
 <form action="/" method="POST">
-Subject: <input size="60" type="text" name="subject" /><br />
+Subject: <input size="60" type="text" name="subject" value="[% subject | html %]"/><br />
 Syntax: <select name="lang">
 [% FOREACH lang IN syntaxes.keys.sort %]
 <option [% IF lang == "Text only" %]selected="selected"[% END %]
@@ -19,6 +19,6 @@ Expires: <select name="expires">
 [% END %]
 </select>
 <input type="submit" value="Paste" /><br />
-<textarea name="code" rows="30" cols="80" /></textarea><br />
+<textarea name="code" rows="30" cols="80" />[% code | html %]</textarea><br />
 <input type="submit" value="Paste" /><br />
 </form>

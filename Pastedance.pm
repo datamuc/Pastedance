@@ -1,4 +1,3 @@
-# vim: sw=4 ai si et
 package Pastedance;
 use Dancer;
 use Data::Dumper;
@@ -36,6 +35,21 @@ my %expires = %{ config->{expires} };
 get '/' => sub {
     encode('utf-8',
       template 'index', { syntaxes => get_lexers(), expires => \%expires });
+};
+
+get '/new_from/:id' => sub {
+    my $doc = $collection->find_one({id => params->{id}});
+    $doc->{subject} ||= params->{id};
+    encode('utf-8',
+        template 'index', {
+            syntaxes => get_lexers(),
+            expires => \%expires, 
+            code    => $doc->{code},
+            subject => $doc->{subject} =~ /\Are:/i
+                ? $doc->{subject}
+                : "Re: ".$doc->{subject},
+        }
+    );
 };
 
 post '/' => sub {
@@ -124,4 +138,4 @@ EOP
 
 true;
 
-# vim: sw=2 ai et
+# vim: sw=4 ai et
