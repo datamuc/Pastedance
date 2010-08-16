@@ -11,6 +11,7 @@ use Pastedance::Pygments;
 #use SourceHighlight;
 #use Syntax::Highlight::Perl::Improved;
 #use KiokuDB::Backend::MongoDB;
+use Data::Dumper::Concise;
 use MongoDB;
 
 #
@@ -119,19 +120,11 @@ get '/json/lexers' => sub {
         };
     }
     @return = grep { $_->{label} =~ /\Q$term/i } @return;
-    my $sort = sub {
-        return $a->{label} cmp $b->{label} unless length $term;
-        if($a->{label} =~ /\A\Q$term/i
-           and $b->{label} !~ /\A\Q$term/i) {
-           return -1;
-        }
-        if($b->{label} =~ /\A\Q$term/i
-           and $a->{label} !~ /\A\Q$term/i) {
-           return 1;
-        }
-        return $a->{label} cmp $b->{label};
-    };
-    @return = sort $sort @return;
+    @return =
+        map  { $_->[1] }
+        sort { $a->[0] cmp $b->[0] }
+        map  { [($_->{label} =~ /\A\Q$term/i ? 0 : 1).$_->{label}, $_] } @return
+    ;
     to_json(\@return);
 };
 
