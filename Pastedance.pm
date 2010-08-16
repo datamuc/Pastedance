@@ -7,6 +7,7 @@ use URI::Escape;
 use Data::Uniqid qw/uniqid/;
 #use lib '/opt/sh';
 use Encode qw/decode encode/;
+use Pastedance::Pygments;
 #use SourceHighlight;
 #use Syntax::Highlight::Perl::Improved;
 #use KiokuDB::Backend::MongoDB;
@@ -137,7 +138,7 @@ get '/json/lexers' => sub {
 sub pygments_highlight {
    my $doc = shift;
    my $ln  = shift;
-   return py_highlight($doc->{code}, $doc->{lang});
+   return highlight($doc->{code}, $doc->{lang});
 }
 
 sub e404 {
@@ -146,35 +147,6 @@ sub e404 {
   return "Not found";
 }
 
-use Inline Python => << 'EOP';
-from pygments import highlight
-from pygments.formatters import HtmlFormatter
-from pygments.lexers import get_lexer_by_name, get_all_lexers
-
-def get_lexers():
-  r = {}
-  lexers = get_all_lexers()
-  for l in lexers:
-    r[l[0]] = l[1][0]
-  return r
-
-def get_lexer(lang):
-    try:
-        return get_lexer_by_name(lang);
-    except:
-        return None;
-
-def py_highlight(code, lang):
-  try:
-    lexer = get_lexer_by_name(lang)
-  except:
-    lexer = get_lexer_by_name('text')
-
-  formatter = HtmlFormatter(linenos=True, lineanchors='l', anchorlinenos=True)
-  return highlight(code, lexer, formatter)
-
-EOP
-
-true;
+1;
 
 # vim: sw=4 ai et
