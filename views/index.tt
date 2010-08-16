@@ -3,12 +3,7 @@
 <script type="text/javascript"><!--
 $(function() {
     $("#syntaxes").autocomplete({
-        source: '/json/lexers',
-        select: function(event, ui) {
-            if(ui.item) {
-                $("#lang").value=ui.item.value;
-            }
-        }
+        source: '/json/lexers'
     });
 });
 --></script>
