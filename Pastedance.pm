@@ -34,7 +34,10 @@ my %expires = %{ config->{expires} };
 
 get '/' => sub {
     encode('utf-8',
-      template 'index', { syntaxes => get_lexers(), expires => \%expires });
+      template 'index', {
+        syntaxes => get_lexers(),
+        expires => \%expires,
+    });
 };
 
 get '/new_from/:id' => sub {
@@ -59,8 +62,10 @@ post '/' => sub {
     unless(length($code)) {
       return "don't paste no code"
     }
+
     my %rlex = reverse %{ get_lexers() };
-    if ( ! exists $rlex{$lang} ) {
+
+    if ( ! defined $rlex{$lang} ) {
        $lang = "txt";
     }
 
@@ -101,6 +106,34 @@ get '/lexers/' => sub {
   return join("\n", sort keys %{ get_lexers() });
 };
 
+get '/json/lexers' => sub {
+    my $term = params->{term} || "";
+    my $lexers = get_lexers(); 
+    my @return;
+    while(my ($k,$v) = each %$lexers) {
+        push @return, {
+            id => $k,
+            label => $k,
+            value => $v,
+        };
+    }
+    @return = grep { $_->{label} =~ /\Q$term/i } @return;
+    my $sort = sub {
+        return $a->{label} cmp $b->{label} unless length $term;
+        if($a->{label} =~ /\A\Q$term/i
+           and $b->{label} !~ /\A\Q$term/i) {
+           return -1;
+        }
+        if($b->{label} =~ /\A\Q$term/i
+           and $a->{label} !~ /\A\Q$term/i) {
+           return 1;
+        }
+        return $a->{label} cmp $b->{label};
+    };
+    @return = sort $sort @return;
+    to_json(\@return);
+};
+
 sub pygments_highlight {
    my $doc = shift;
    my $ln  = shift;
@@ -124,6 +157,12 @@ def get_lexers():
   for l in lexers:
     r[l[0]] = l[1][0]
   return r
+
+def get_lexer(lang):
+    try:
+        return get_lexer_by_name(lang);
+    except:
+        return None;
 
 def py_highlight(code, lang):
   try:

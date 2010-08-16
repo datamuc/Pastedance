@@ -1,9 +1,30 @@
+<script type="text/javascript" src="/js/jquery.js"></script>
+<script type="text/javascript" src="/js/jquery-ui.js"></script>
+<script type="text/javascript"><!--
+[%- USE JSON ( pretty => 1 ) -%]
+[%- # USE JSON %]
+$(function() {
+    $("#syntaxes").autocomplete({
+        source: '/json/lexers',
+        select: function(event, ui) {
+            if(ui.item) {
+                $("#lang").value=ui.item.value;
+            }
+        }
+    });
+});
+--></script>
 <h2>Paste your code!</h2>
 Size limit ~ 100kB
 
 <form action="/" method="POST">
 Subject: <input size="60" type="text" name="subject" value="[% subject | html %]"/><br />
-Syntax: <select name="lang">
+
+
+Syntax: <script type="text/javascript"><!--
+document.write('<input id="syntaxes" name="lang" />');
+--></script>
+<noscript><select name="lang">
 [% FOREACH lang IN syntaxes.keys.sort %]
 <option [% IF lang == "Text only" %]selected="selected"[% END %]
   value="[% syntaxes.$lang | html %]">
@@ -11,6 +32,7 @@ Syntax: <select name="lang">
 </option>
 [% END %]
 </select>
+</noscript>
 Expires: <select name="expires">
 [% FOREACH e IN expires.keys %]
 <option
