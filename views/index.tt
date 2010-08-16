@@ -1,8 +1,6 @@
 <script type="text/javascript" src="/js/jquery.js"></script>
 <script type="text/javascript" src="/js/jquery-ui.js"></script>
 <script type="text/javascript"><!--
-[%- USE JSON ( pretty => 1 ) -%]
-[%- # USE JSON %]
 $(function() {
     $("#syntaxes").autocomplete({
         source: '/json/lexers',
