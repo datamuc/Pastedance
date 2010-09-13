@@ -1,39 +1,60 @@
 package Pastedance;
 use Dancer;
 use Data::Dumper;
-use KiokuDB;
+use MongoDB;
+use DateTime;
 use URI::Escape;
 use Data::Uniqid qw/uniqid/;
-use lib '/opt/sh';
+#use lib '/opt/sh';
 use Encode qw/decode encode/;
-use SourceHighlight;
+use Pastedance::Pygments;
+#use SourceHighlight;
+#use Syntax::Highlight::Perl::Improved;
+#use KiokuDB::Backend::MongoDB;
+use Data::Dumper::Concise;
+use MongoDB;
 
-my $k = KiokuDB->connect(
-  #"dbi:SQLite:dbname=pastedance.db",
-  'bdb:dir=pastebindb',
-  transactions=>0,
-  create => 1,
+#
+# Database setup
+#
+my $mongo = MongoDB::Connection->new(
+    host => config->{mongo}->{host},
+    port => config->{mongo}->{port},
 );
+if(config->{mongo}->{auth}) {
+    my $return = $mongo->authenticate(
+        config->{mongo}->{database},
+        config->{mongo}->{auth}->{user},
+        config->{mongo}->{auth}->{password},
+    );
+    die("authentication failed") unless(ref $return && $return->{ok});
+}
+my $database   = $mongo->get_database(config->{mongo}->{database});
+my $collection = $database->get_collection('Pastedance');
 
-my %expires = (
-  '1 week'  => 604800,
-  '1 day'   => 86400,
-  '1 month' => 2678400,
-  never    => -1,
-);
-
-
-# XXX Not sure about this: KiokuDB needs a scope object
-#     so this does create at least one per request... but
-#     not sure about its scope. :p
-before sub {
-  var scope => $k->new_scope;
-  my $langs = config->{langs};
-  set revlangs => { reverse %{$langs} } unless exists config->{revlangs};
-};
+my %expires = %{ config->{expires} };
 
 get '/' => sub {
-    template 'index', { syntaxes => config->{langs}, expires => \%expires };
+    encode('utf-8',
+      template 'index', {
+        syntaxes => get_lexers(),
+        expires => \%expires,
+    });
+};
+
+get '/new_from/:id' => sub {
+    my $doc = $collection->find_one({id => params->{id}});
+    $doc->{subject} ||= params->{id};
+    encode('utf-8',
+        template 'index', {
+            syntaxes => get_lexers(),
+            expires => \%expires, 
+            code    => $doc->{code},
+            subject => $doc->{subject} =~ /\Are:/i
+                ? $doc->{subject}
+                : "Re: ".$doc->{subject},
+        }
+    );
 };
 
 post '/' => sub {
@@ -43,62 +64,74 @@ post '/' => sub {
     unless(length($code)) {
       return "don't paste no code"
     }
-    if ( ! exists config->{langs}->{$lang} ) {
+
+    my %rlex = reverse %{ get_lexers() };
+
+    if ( ! defined $rlex{$lang} ) {
        $lang = "txt";
     }
 
     my $doc = {
+       id      => uniqid,
        code    => decode('UTF-8', $code),
        lang    => $lang,
        subject => $subject,
        'time'  => time,
        expires => $expires{request->params->{expires}} // $expires{'1 week'},
     };
-    my $id = $k->store(uniqid, $doc);
-    redirect request->uri_for($id);
+    my $id = $collection->insert($doc);
+    redirect request->uri_for($doc->{id});
 };
 
 get '/:id' => sub {
-    my $doc = $k->lookup(params->{id});
+    my $doc = $collection->find_one({id => params->{id}});
     return e404() unless $doc;
     my $ln = request->params->{ln};
     $ln = defined($ln) ? $ln : 1;
     $doc->{url} = request->uri_for('/');
     $doc->{id}  = params->{id};
-    $doc->{code} = highlight($doc, $ln);
-    template 'show', $doc;
+    $doc->{code} = pygments_highlight($doc, $ln);
+    $doc->{'time'} = DateTime->from_epoch( epoch => $doc->{time} ),
+    $doc->{expires} = DateTime::Duration->new( seconds => $doc->{expires} ),
+    encode('UTF-8', template 'show', $doc);
 };
 
 get '/plain/:id' => sub {
-  my $doc = $k->lookup(params->{id});
+  my $doc = $collection->find_one({id => params->{id}});
   return e404() unless $doc;
   content_type 'text/plain; charset=UTF-8';
-  return $doc->{code};
+  return encode('UTF-8', $doc->{code});
 };
 
-#print Dumper(config);
-#if(config->{environment} eq "development") {
-#  get '/dump/:id' => sub {
-#    content_type 'text/plain; charset=UTF-8';
-#    my $doc = $k->lookup(params->{id});
-#    return Dumper($doc)."\n".Dumper(config);
-#  };
-#}
+get '/lexers/' => sub {
+  content_type 'text/plain; charset=UTF-8';
+  return join("\n", sort keys %{ get_lexers() });
+};
 
+get '/json/lexers' => sub {
+    my $term = params->{term} || "";
+    my $lexers = get_lexers(); 
+    my @return;
+    while(my ($k,$v) = each %$lexers) {
+        push @return, {
+            id => $k,
+            label => $k,
+            value => $v,
+        };
+    }
+    @return = grep { $_->{label} =~ /\Q$term/i } @return;
+    @return =
+        map  { $_->[1] }
+        sort { $a->[0] cmp $b->[0] }
+        map  { [($_->{label} =~ /\A\Q$term/i ? 0 : 1).$_->{label}, $_] } @return
+    ;
+    to_json(\@return);
+};
 
-sub highlight {
-  my $doc = shift;
-  my $ln  = shift;
-  my $lang = config->{langs}->{$doc->{lang}} // 'nohilite.lang';
-  $doc->{code} =~ s/\t/        /g;
-  my $hl = SourceHighlight::SourceHighlight->new('html.outlang');
-  if($ln) {
-    $hl->setGenerateLineNumbers(1);
-    $hl->setLineNumberPad(' ');
-    $hl->setGenerateLineNumberRefs(1);
-    $hl->setLineNumberAnchorPrefix('l');
-  }
-  return $hl->highlightString($doc->{code}, $lang);
+sub pygments_highlight {
+   my $doc = shift;
+   my $ln  = shift;
+   return highlight($doc->{code}, $doc->{lang});
 }
 
 sub e404 {
@@ -107,4 +140,6 @@ sub e404 {
   return "Not found";
 }
 
-true;
+1;
+
+# vim: sw=4 ai et

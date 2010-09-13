@@ -2,9 +2,14 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en-US" xml:lang="en-US">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-<title>Pastedance</title>
+<title>[% subject %][% ' - ' IF subject %]Pastedance</title>
+<link type="text/css" href="/ui-lightness/jquery.ui.all.css" rel="stylesheet" />
 <link rel="stylesheet" type="text/css" href="/css/style.css" />
-<link rel="stylesheet" type="text/css" href="/css/highlight.css" />
+<!-- <link rel="stylesheet" type="text/css" href="/css/highlight.css" /> -->
+<link rel="stylesheet" type="text/css" href="/css/pygments-emacs.css" />
+<style type="text/css"><!--
+.pygments .linenodiv { padding-right: 7px }
+--></style></style>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 </head>
 <body>
@@ -14,10 +19,6 @@
 </div>
 <div id="footer">
 Powered by <a href="http://dancer.sukria.net">Dancer</a> <br />
-Highlighting Engine is
-<a href="http://www.gnu.org/software/src-highlite/">GNU Source-highlight</a><br />
-Perl bindings for GNU Source-highlight provided by
-<a href="https://code.launchpad.net/~chust/+junk/SourceHighlight">murphy</a>. Thank you for this!
 </div>
 </body>
 </html>
