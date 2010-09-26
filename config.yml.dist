@@ -1,0 +1,24 @@
+# vim: et ai si sw=2
+layout: "main"
+logger: "file"
+template: template_toolkit
+environment: development
+
+engines:
+  template_toolkit:
+     start_tag: "[%"
+     stop_tag: "%]"
+
+expires:
+  1 week: 604800
+  1 day: 86400
+  1 month: 2678400
+  never: -1
+
+mongo:
+  host: localhost
+  port: 27017
+  database: Pastedance
+#  auth:
+#    user: someuser
+#    password: somepass

@@ -1,19 +1,20 @@
 [% USE date %]
 <p>
 [% url %][% id | uri | html %]<br />
-<b>Date:</b> [% date.format(time, '%Y-%m-%d %H:%M:%S') %]
+<b>Date:</b> [% time.strftime('%Y-%m-%d %H:%M:%S') %]
 <b>Expires:</b>
-[% IF expires != '-1' %]
-[% date.format(time + expires, '%Y-%m-%d %H:%M:%S') %]
+[% IF ! expires.is_negative %]
+[% time.add(expires).strftime('%Y-%m-%d %H:%M:%S') %]
 [% ELSE %]
 never
 [% END %]<br />
 
 [% IF subject %]
 <b>Subject:</b> [% subject | html %] [% END %]<b>Lang:</b> [% lang %]
-<a href="[% url %]plain/[% id | uri | html %]">Plain</a><br />
+<a href="[% url | html %]plain/[% id | uri | html %]">Plain</a><br />
 </p>
+<a href="[% url | html %]new_from/[% id | uri | html %]">Edit</a>
 <hr />
-<div style="font-family: monospace">
+<div style="font-family: monospace" class="pygments">
 [% code %]
 </div>

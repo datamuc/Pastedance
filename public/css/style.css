@@ -17,6 +17,10 @@ a {
     color: #a5ac02;
 }
 
+.linenos a {
+    text-decoration:none;
+}
+
 h1 { 
     color: #a5ec02;
 }

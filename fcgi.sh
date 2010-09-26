@@ -1,4 +1,4 @@
 #!/bin/sh
-
-plackup --server FCGI --listen /tmp/pastedance.fcgi --nproc 5 --detach 1 \
-        --pidfile /home/danielt/vc/git/Pastedance/paste.pid
+/usr/bin/daemon -o $PWD/logs/daemon.log -D $PWD -F $PWD/paste.pid -- \
+   plackup --server Twiggy --listen 127.0.0.1:6300 --nproc 5 \
+           -E production 
