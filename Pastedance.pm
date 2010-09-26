@@ -5,12 +5,8 @@ use MongoDB;
 use DateTime;
 use URI::Escape;
 use Data::Uniqid qw/uniqid/;
-#use lib '/opt/sh';
 use Encode qw/decode encode/;
 use Pastedance::Pygments;
-#use SourceHighlight;
-#use Syntax::Highlight::Perl::Improved;
-#use KiokuDB::Backend::MongoDB;
 use Data::Dumper::Concise;
 use MongoDB;
 
@@ -119,12 +115,18 @@ get '/json/lexers' => sub {
             value => $v,
         };
     }
+
+    # search for matching lexers
     @return = grep { $_->{label} =~ /\Q$term/i } @return;
+
+    # sort lexers
+    # if lexer begins with $term it is sorted in first
     @return =
         map  { $_->[1] }
         sort { $a->[0] cmp $b->[0] }
         map  { [($_->{label} =~ /\A\Q$term/i ? 0 : 1).$_->{label}, $_] } @return
     ;
+
     to_json(\@return);
 };
 
