@@ -15,7 +15,7 @@ Subject: <input size="60" type="text" name="subject" value="[% subject | html %]
 
 
 Syntax: <script type="text/javascript"><!--
-document.write('<input id="syntaxes" name="lang" />');
+document.write('<input placeholder="Search..." id="syntaxes" name="lang" />');
 --></script>
 <noscript><select name="lang">
 [% FOREACH lang IN syntaxes.keys.sort %]

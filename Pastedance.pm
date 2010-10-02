@@ -5,12 +5,8 @@ use MongoDB;
 use DateTime;
 use URI::Escape;
 use Data::Uniqid qw/uniqid/;
-#use lib '/opt/sh';
 use Encode qw/decode encode/;
 use Pastedance::Pygments;
-#use SourceHighlight;
-#use Syntax::Highlight::Perl::Improved;
-#use KiokuDB::Backend::MongoDB;
 use Data::Dumper::Concise;
 use MongoDB;
 
@@ -36,10 +32,11 @@ my %expires = %{ config->{expires} };
 
 get '/' => sub {
     encode('utf-8',
-      template 'index', {
-        syntaxes => get_lexers(),
-        expires => \%expires,
-    });
+        template 'index', {
+            syntaxes => get_lexers(),
+            expires => \%expires,
+        }
+    );
 };
 
 get '/new_from/:id' => sub {
@@ -68,16 +65,16 @@ post '/' => sub {
     my %rlex = reverse %{ get_lexers() };
 
     if ( ! defined $rlex{$lang} ) {
-       $lang = "txt";
+        $lang = "txt";
     }
 
     my $doc = {
-       id      => uniqid,
-       code    => decode('UTF-8', $code),
-       lang    => $lang,
-       subject => $subject,
-       'time'  => time,
-       expires => $expires{request->params->{expires}} // $expires{'1 week'},
+        id      => uniqid,
+        code    => decode('UTF-8', $code),
+        lang    => $lang,
+        subject => $subject,
+        'time'  => time,
+        expires => $expires{request->params->{expires}} // $expires{'1 week'},
     };
     my $id = $collection->insert($doc);
     redirect request->uri_for($doc->{id});
@@ -97,15 +94,15 @@ get '/:id' => sub {
 };
 
 get '/plain/:id' => sub {
-  my $doc = $collection->find_one({id => params->{id}});
-  return e404() unless $doc;
-  content_type 'text/plain; charset=UTF-8';
-  return encode('UTF-8', $doc->{code});
+    my $doc = $collection->find_one({id => params->{id}});
+    return e404() unless $doc;
+    content_type 'text/plain; charset=UTF-8';
+    return encode('UTF-8', $doc->{code});
 };
 
 get '/lexers/' => sub {
-  content_type 'text/plain; charset=UTF-8';
-  return join("\n", sort keys %{ get_lexers() });
+    content_type 'text/plain; charset=UTF-8';
+    return join("\n", sort keys %{ get_lexers() });
 };
 
 get '/json/lexers' => sub {
@@ -119,25 +116,31 @@ get '/json/lexers' => sub {
             value => $v,
         };
     }
+
+    # search for matching lexers
     @return = grep { $_->{label} =~ /\Q$term/i } @return;
+
+    # sort lexers
+    # if lexer begins with $term it is sorted in first
     @return =
         map  { $_->[1] }
         sort { $a->[0] cmp $b->[0] }
         map  { [($_->{label} =~ /\A\Q$term/i ? 0 : 1).$_->{label}, $_] } @return
     ;
+
     to_json(\@return);
 };
 
 sub pygments_highlight {
-   my $doc = shift;
-   my $ln  = shift;
-   return highlight($doc->{code}, $doc->{lang});
+    my $doc = shift;
+    my $ln  = shift;
+    return highlight($doc->{code}, $doc->{lang});
 }
 
 sub e404 {
-  status '404';
-  content_type 'text/plain';
-  return "Not found";
+    status '404';
+    content_type 'text/plain';
+    return "Not found";
 }
 
 1;

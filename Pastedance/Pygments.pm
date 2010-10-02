@@ -8,20 +8,20 @@ from pygments.formatters import HtmlFormatter
 from pygments.lexers import get_lexer_by_name, get_all_lexers
 
 def get_lexers():
-  r = {}
-  lexers = get_all_lexers()
-  for l in lexers:
-    r[l[0]] = l[1][0]
-  return r
+    r = {}
+    lexers = get_all_lexers()
+    for l in lexers:
+        r[l[0]] = l[1][0]
+    return r
 
 def py_highlight(code, lang):
-  try:
-    lexer = get_lexer_by_name(lang)
-  except:
-    lexer = get_lexer_by_name('text')
+    try:
+        lexer = get_lexer_by_name(lang)
+    except:
+        lexer = get_lexer_by_name('text')
 
-  formatter = HtmlFormatter(linenos=True, lineanchors='l', anchorlinenos=True)
-  return highlight(code, lexer, formatter)
+    formatter = HtmlFormatter(linenos=True, lineanchors='l', anchorlinenos=True)
+    return highlight(code, lexer, formatter)
 
 EOP
 
