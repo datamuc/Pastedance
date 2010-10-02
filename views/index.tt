@@ -1,101 +1,55 @@
-  
-<!-- 
-    Credit goes to the Ruby on Rails team for this page 
-    has been heavily based on the default Rails page that is 
-    built with a scaffolded application.
+<link type="text/css" href="/ui-lightness/jquery.ui.all.css" rel="stylesheet" />
 
-    Thanks a lot to them for their work.
-
-    See Ruby on Rails if you want a kickass framework in Ruby:
-    http://www.rubyonrails.org/
--->
+<script type="text/javascript"><!--
+$(function() {
+    $("#syntaxes").autocomplete({
+        source: '/json/lexers'
+    });
+});
+--></script> 
 
 <div id="page">
-      <div id="sidebar">
-        <ul id="sidebar-items">
-          <li>
-            <h3>Join the community</h3>
-            <ul class="links">
-
-              <li><a href="http://perldancer.org/">PerlDancer</a></li>
-              <li><a href="http://twitter.com/PerlDancer/">Official Twitter</a></li>
-              <li><a href="http://github.com/sukria/Dancer/">GitHub Community</a></li>
-            </ul>
-          </li>
-          
-          <li>
-            <h3>Browse the documentation</h3>
-
-            <ul class="links">
-              <li><a
-              href="http://search.cpan.org/dist/Dancer/lib/Dancer/Introduction.pod">Introduction</a></li>
-              <li><a href="http://search.cpan.org/dist/Dancer/lib/Dancer/Cookbook.pod">Cookbook</a></li>
-              <li><a href="http://search.cpan.org/dist/Dancer/lib/Dancer/Deployment.pod">Deployment Guide</a></li>
-            </ul>
-          </li>
-
-          <li>
-            <h3>Your application's environment</h3>
-
-            <ul>
-                <li>Location: <code>/home/danielt/tmp/Pastedance</code></li>
-                <li>Template engine: <code><% settings.template %></code></li>
-                <li>Logger: <code><% settings.logger %></code></li>
-                <li>Environment: <code><% settings.environment %></code></li>
-            </ul>
-
-          </li>
-        </ul>
-
-      </div>
 
       <div id="content">
         <div id="header">
-          <h1>Perl is dancing</h1>
-          <h2>You&rsquo;ve joined the dance floor!</h2>
+          <h1>Pastedance</h1>
+          <h2>Paste your code!</h2>
         </div>
 
-        <div id="getting-started">
-          <h1>Getting started</h1>
-          <h2>Here&rsquo;s how to get dancing:</h2>
-                    
-          <h3><a href="#" id="about_env_link">About your application's environment</a></h3>
+        <div id="paste">
 
-          <div id="about-content" style="display: none;">
-            <table>
-                <tbody>
-                <tr>
-                    <td>Perl version</td>
-                    <td><tt>5.010001</tt></td>
-                </tr>
-                <tr>
-                    <td>Dancer version</td>
-                    <td><tt>1.1902</tt></td>
-                </tr>
-                <tr>
-                    <td>Backend</td>
-                    <td><tt><% settings.apphandler %></tt></td>
-                </tr>
-                <tr>
-                    <td>Appdir</td>
-                    <td><tt>/home/danielt/tmp/Pastedance</tt></td>
-                </tr>
-                <tr>
-                    <td>Template engine</td>
-                    <td><tt><% settings.template %></tt></td>
-                </tr>
-                <tr>
-                    <td>Logger engine</td>
-                    <td><tt><% settings.logger %></tt></td>
-                </tr>
-                <tr>
-                    <td>Running environment</td>
-                    <td><tt><% settings.environment %></tt></td>
-                </tr>
-                </tbody>
-            </table>
-          </div>
+            size limit ~ 100kb
+            <form action="/" method="post">
+            subject: <input size="60" type="text" name="subject" value="[% subject | html %]"/><br />
 
+
+            syntax: <script type="text/javascript"><!--
+            document.write('<input placeholder="search..." id="syntaxes" name="lang" />');
+            --></script>
+            <noscript><select name="lang">
+            [% foreach lang in syntaxes.keys.sort %]
+            <option [% if lang == "text only" %]selected="selected"[% end %]
+              value="[% syntaxes.$lang | html %]">
+            [% lang | html %]
+            </option>
+            [% end %]
+            </select>
+            </noscript>
+            expires: <select name="expires">
+            [% foreach e in expires.keys %]
+            <option
+            [% if e == "1 week" %]selected="selected"[% end %] value="[% e | html %]">
+            [% e | html %]</option>
+            [% end %]
+            </select>
+            <input type="submit" value="paste" /><br />
+            <textarea name="code" rows="30" cols="80" />[% code | html %]</textarea><br />
+            <input type="submit" value="paste" /><br />
+            </form>
+
+        </div>
+
+<!--
     <script type="text/javascript">
     $('#about_env_link').click(function() {
         $('#about-content').slideToggle('fast', function() {
@@ -142,4 +96,8 @@
           </ol>
         </div>
       </div>
-    </div>
+-->
+</div>
+
+
+

@@ -12,6 +12,7 @@ def get_lexers():
     lexers = get_all_lexers()
     for l in lexers:
         r[l[0]] = l[1][0]
+
     return r
 
 def py_highlight(code, lang):
@@ -25,10 +26,11 @@ def py_highlight(code, lang):
 
 EOP
 
+use Data::Dumper::Concise;
 sub import {
     my $caller = caller;
-    *{"${caller}::get_lexers"} = sub { get_lexers(@_) };
-    *{"${caller}::highlight"}  = sub { py_highlight(@_) };
+    *{"${caller}::get_lexers"} = sub { return get_lexers(@_) };
+    *{"${caller}::highlight"}  = sub { return py_highlight(@_) };
 }
 
 1;

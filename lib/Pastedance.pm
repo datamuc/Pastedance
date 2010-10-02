@@ -1,5 +1,5 @@
 package Pastedance;
-use Dancer qw/:syntax/;
+use Dancer qw(:syntax);
 use MongoDB;
 use DateTime;
 use URI::Escape;
@@ -8,6 +8,8 @@ use Encode qw/decode encode/;
 use Pastedance::Pygments;
 use Data::Dumper::Concise;
 use MongoDB;
+
+our $VERSION='0.007';
 
 #
 # Database setup

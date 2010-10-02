@@ -29,7 +29,7 @@ text-decoration: none;
 
 #page {
 background-color: #ddd;
-width: 750px;
+width: 95%;
 margin: auto;
 margin-left: auto;
 padding-left: 0px;
@@ -41,7 +41,7 @@ background-color: white;
 border: 3px solid #aaa;
 border-top: none;
 padding: 25px;
-width: 500px;
+width: 95%;
 }
 
 #sidebar {
@@ -193,4 +193,13 @@ text-align: center;
 padding-right: 160px;
 font-family: sans-serif;
 font-size: 10px;
+}
+
+.linenos a {
+    text-decoration:none;
+    padding-right: 1em;
+}
+
+pre {
+    font-family: "inconsolata","lucida console","monaco","andale mono","bitstream vera sans mono","consolas",monospace;
 }
