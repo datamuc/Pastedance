@@ -1,6 +1,5 @@
 package Pastedance;
-use Dancer;
-use Data::Dumper;
+use Dancer qw/:syntax/;
 use MongoDB;
 use DateTime;
 use URI::Escape;

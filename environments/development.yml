@@ -1,5 +1,8 @@
-log: "debug"
-warnings: 0
+log: "core"
+warnings: 1
 show_errors: 1
-auto_reload: 1
 
+# auto_reload is a development feature
+# you should enable it by yourself if you want it
+# Module::Refresh is needed
+auto_reload: 0
