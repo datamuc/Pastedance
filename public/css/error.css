@@ -16,11 +16,11 @@ pre {
     padding-left: 1em;
 }
 
-#footer {
+footer {
     font-size: 10px;
 }
 
-span.key { 
+span.key {
     color: #449;
     font-weight: bold;
     width: 120px;

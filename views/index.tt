@@ -1,39 +1,103 @@
-<script type="text/javascript" src="/js/jquery.js"></script>
-<script type="text/javascript" src="/js/jquery-ui.js"></script>
+<link type="text/css" href="/ui-lightness/jquery.ui.all.css" rel="stylesheet" />
+
 <script type="text/javascript"><!--
 $(function() {
     $("#syntaxes").autocomplete({
         source: '/json/lexers'
     });
 });
---></script>
-<h2>Paste your code!</h2>
-Size limit ~ 100kB
+--></script> 
 
-<form action="/" method="POST">
-Subject: <input size="60" type="text" name="subject" value="[% subject | html %]"/><br />
+<div id="page">
+
+      <div id="content">
+        <div id="header">
+          <h1>Pastedance</h1>
+          <h2>Paste your code!</h2>
+        </div>
+
+        <div id="paste">
+
+            size limit ~ 100kb
+            <form action="/" method="post">
+            subject: <input size="60" type="text" name="subject" value="[% subject | html %]"/><br />
 
 
-Syntax: <script type="text/javascript"><!--
-document.write('<input placeholder="Search..." id="syntaxes" name="lang" />');
---></script>
-<noscript><select name="lang">
-[% FOREACH lang IN syntaxes.keys.sort %]
-<option [% IF lang == "Text only" %]selected="selected"[% END %]
-  value="[% syntaxes.$lang | html %]">
-[% lang | html %]
-</option>
-[% END %]
-</select>
-</noscript>
-Expires: <select name="expires">
-[% FOREACH e IN expires.keys %]
-<option
-[% IF e == "1 week" %]selected="selected"[% END %] value="[% e | html %]">
-[% e | html %]</option>
-[% END %]
-</select>
-<input type="submit" value="Paste" /><br />
-<textarea name="code" rows="30" cols="80" />[% code | html %]</textarea><br />
-<input type="submit" value="Paste" /><br />
-</form>
+            syntax: <script type="text/javascript"><!--
+            document.write('<input placeholder="search..." id="syntaxes" name="lang" />');
+            --></script>
+            <noscript><select name="lang">
+            [% foreach lang in syntaxes.keys.sort %]
+            <option [% if lang == "text only" %]selected="selected"[% end %]
+              value="[% syntaxes.$lang | html %]">
+            [% lang | html %]
+            </option>
+            [% end %]
+            </select>
+            </noscript>
+            expires: <select name="expires">
+            [% foreach e in expires.keys %]
+            <option
+            [% if e == "1 week" %]selected="selected"[% end %] value="[% e | html %]">
+            [% e | html %]</option>
+            [% end %]
+            </select>
+            <input type="submit" value="paste" /><br />
+            <textarea name="code" rows="30" cols="80" />[% code | html %]</textarea><br />
+            <input type="submit" value="paste" /><br />
+            </form>
+
+        </div>
+
+<!--
+    <script type="text/javascript">
+    $('#about_env_link').click(function() {
+        $('#about-content').slideToggle('fast', function() {
+            // ok
+        });
+    });
+    </script>
+
+
+          <ol>          
+            <li>
+              <h2>Tune your application</h2>
+
+              <p>
+              Your application is configured via a global configuration file,
+              <tt>config.yml</tt> and an "environment" configuration file,
+              <tt>environments/development.yml</tt>. Edit those files if you
+              want to change the settings of your application.
+              </p>
+            </li>
+
+            <li>
+              <h2>Add your own routes</h2>
+
+              <p>
+              The default route that displays this page can be removed,
+              it's just here to help you get started. The template used to
+              generate this content is located in 
+              <code>views/index.tt</code>.
+              You can add some routes to <tt>lib/Pastedance.pm</tt>. 
+              </p>
+            </li>
+
+            <li>
+                <h2>Enjoy web development again</h2>
+
+                <p>
+                With the <tt>auto_reload</tt> feature (which is enabled in the
+                <tt>development</tt> environment)
+                you don't even have to restart the standalone webserver to see your changes.
+                </p>
+            </li>
+
+          </ol>
+        </div>
+      </div>
+-->
+</div>
+
+
+

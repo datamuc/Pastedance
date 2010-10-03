@@ -1,3 +1,11 @@
+<div id="page">
+
+      <div id="content">
+        <div id="header">
+          <h1><a style="text-decoration: none; color: #000000" href="/">Pastedance</a></h1>
+          <h2>Paste your code!</h2>
+        </div>
+<div id="paste">
 [% USE date %]
 <p>
 [% url %][% id | uri | html %]<br />
@@ -17,4 +25,7 @@ never
 <hr />
 <div style="font-family: monospace" class="pygments">
 [% code %]
+</div>
+</div>
+</div>
 </div>
