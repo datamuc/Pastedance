@@ -2,7 +2,6 @@ package Pastedance;
 use Dancer qw(:syntax);
 use MongoDB;
 use DateTime;
-use URI::Escape;
 use Data::Uniqid qw/uniqid/;
 use Encode qw/decode encode/;
 use Pastedance::Pygments;

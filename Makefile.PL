@@ -17,6 +17,8 @@ WriteMakefile(
         'Dancer'         => 1.1902,
         'MongoDB'        => 0,
         'Inline::Python' => 0,
+        'Data::Uniqid'   => 0,
+        'DateTime'       => 0,
     },
     dist                => { COMPRESS => 'gzip -9f', SUFFIX => 'gz', },
     clean               => { FILES => 'Pastedance-*' },
