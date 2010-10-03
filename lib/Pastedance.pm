@@ -6,7 +6,6 @@ use URI::Escape;
 use Data::Uniqid qw/uniqid/;
 use Encode qw/decode encode/;
 use Pastedance::Pygments;
-use Data::Dumper::Concise;
 use MongoDB;
 
 our $VERSION='0.007';

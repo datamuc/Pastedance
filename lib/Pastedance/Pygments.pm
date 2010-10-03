@@ -26,7 +26,6 @@ def py_highlight(code, lang):
 
 EOP
 
-use Data::Dumper::Concise;
 sub import {
     my $caller = caller;
     *{"${caller}::get_lexers"} = sub { return get_lexers(@_) };
