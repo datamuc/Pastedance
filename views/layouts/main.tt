@@ -4,6 +4,7 @@
 <head>
 <meta http-equiv="Content-type" content="text/html; charset=UTF-8" />
 <title>[% "${subject} - " | html IF subject %]Pastedance</title>
+<link rel="stylesheet" href="/css/ribbon.css" type="text/css" />
 <link rel="stylesheet" href="/css/style.css" />
 <link rel="stylesheet" type="text/css" href="/css/pygments-tango.css" /> 
 <script type="text/javascript" src="/js/jquery.js"></script>
@@ -11,9 +12,12 @@
 
 </head>
 <body>
+<a href="http://github.com/datamuc/Pastedance"><img style="position: absolute; top: 0; right: 0; border: 0;" src="http://s3.amazonaws.com/github/ribbons/forkme_right_green_007200.png" alt="Fork me on GitHub" /></a>
 [% content %]
 <div id="footer">
 Powered by <a href="http://perldancer.org/">Dancer</a> [% dancer_version %]
+<br />Syntax highlighting is done with <a href="http://pygments.org/">Pygments</a>,
+      Thanks to <a href="http://search.cpan.org/dist/Inline-Python">Inline::Python</a>.
 </div>
 </body>
 </html>
