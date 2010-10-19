@@ -5,27 +5,9 @@ use DateTime;
 use Data::Uniqid qw/uniqid/;
 use Encode qw/decode encode/;
 use Pastedance::Pygments;
-use MongoDB;
+use Dancer::Plugin::Mongo;
 
 our $VERSION='0.007';
-
-#
-# Database setup
-#
-my $mongo = MongoDB::Connection->new(
-    host => config->{mongo}->{host},
-    port => config->{mongo}->{port},
-);
-if(config->{mongo}->{auth}) {
-    my $return = $mongo->authenticate(
-        config->{mongo}->{database},
-        config->{mongo}->{auth}->{user},
-        config->{mongo}->{auth}->{password},
-    );
-    die("authentication failed") unless(ref $return && $return->{ok});
-}
-my $database   = $mongo->get_database(config->{mongo}->{database});
-my $collection = $database->get_collection('Pastedance');
 
 my %expires = %{ config->{expires} };
 
@@ -38,8 +20,12 @@ get '/' => sub {
     );
 };
 
+before sub {
+    var db => mongo->Pastedance->Pastedance;
+};
+
 get '/new_from/:id' => sub {
-    my $doc = $collection->find_one({id => params->{id}});
+    my $doc = vars->{db}->find_one({id => params->{id}});
     $doc->{subject} ||= params->{id};
     encode('utf-8',
         template 'index', {
@@ -75,12 +61,12 @@ post '/' => sub {
         'time'  => time,
         expires => $expires{request->params->{expires}} // $expires{'1 week'},
     };
-    my $id = $collection->insert($doc);
+    my $id = vars->{db}->insert($doc);
     redirect request->uri_for($doc->{id});
 };
 
 get '/:id' => sub {
-    my $doc = $collection->find_one({id => params->{id}});
+    my $doc = vars->{db}->find_one({id => params->{id}});
     return e404() unless $doc;
     my $ln = request->params->{ln};
     $ln = defined($ln) ? $ln : 1;
@@ -93,7 +79,7 @@ get '/:id' => sub {
 };
 
 get '/plain/:id' => sub {
-    my $doc = $collection->find_one({id => params->{id}});
+    my $doc = vars->{db}->find_one({id => params->{id}});
     return e404() unless $doc;
     content_type 'text/plain; charset=UTF-8';
     return encode('UTF-8', $doc->{code});

@@ -19,6 +19,7 @@ WriteMakefile(
         'Inline::Python' => 0,
         'Data::Uniqid'   => 0,
         'DateTime'       => 0,
+        'Dancer::Plugin::Mongo' => 0,
     },
     dist                => { COMPRESS => 'gzip -9f', SUFFIX => 'gz', },
     clean               => { FILES => 'Pastedance-*' },
