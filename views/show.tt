@@ -29,3 +29,19 @@ never
 </div>
 </div>
 </div>
+
+<script type="text/javascript">
+var updateAnchor = function() {
+    var url = window.location.toString();
+    var anchor = url.split("#")[1];
+    $("a[href^='#l-']").removeClass("high");
+    if(anchor) {
+        var select = "a[href='#" + anchor + "']";
+        var a = $(select);
+        a.addClass("high");
+    }
+}
+window.onhashchange = updateAnchor;
+updateAnchor();
+</script>
+
