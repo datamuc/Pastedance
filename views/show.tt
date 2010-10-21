@@ -36,6 +36,7 @@ var updateAnchor = function() {
 
     $("a[href^='#l-']").removeClass("high");
 
+    // #l-5,10:20,34:37 highlights line 5, 10-20 and 34-37
     if(anchor.match(/^#l-(\d+(:\d+)?)(,(\d+(:\d+)?))*/)) {
         anchor = anchor.replace(/^#l-/, '');
 
@@ -46,7 +47,11 @@ var updateAnchor = function() {
             if(range.length == 2) {
                 var from = range[0];
                 var to   = range[1];
-                if(from >= to) return;
+                if(from >= to) {
+                    var t = to;
+                    to = from;
+                    from = t;
+                }
 
                 for(var i = from; i <= to; i++) {
                     var select = "a[href='#l-" + i + "']";
