@@ -30,7 +30,7 @@ never
 </div>
 </div>
 
-<script type="text/javascript">
+<script type="text/javascript">/* <![CDATA[ */
 var updateAnchor = function() {
     var anchor = window.location.hash;
 
@@ -67,5 +67,5 @@ var updateAnchor = function() {
 }
 window.onhashchange = updateAnchor;
 updateAnchor();
-</script>
+/* ]]> */</script>
 

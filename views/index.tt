@@ -1,12 +1,10 @@
-<link type="text/css" href="/ui-lightness/jquery.ui.all.css" rel="stylesheet" />
-
-<script type="text/javascript"><!--
+<script type="text/javascript">/* <![CDATA[ */
 $(function() {
     $("#syntaxes").autocomplete({
         source: '/json/lexers'
     });
 });
---></script> 
+/* ]]> */</script> 
 
 <div id="page">
 
@@ -43,7 +41,7 @@ $(function() {
             [% end %]
             </select>
             <input type="submit" value="paste" /><br />
-            <textarea name="code" rows="30" cols="80" />[% code | html %]</textarea><br />
+            <textarea name="code" rows="30" cols="80">[% code | html %]</textarea><br />
             <input type="submit" value="paste" /><br />
             </form>
 
@@ -95,8 +93,8 @@ $(function() {
 
           </ol>
         </div>
-      </div>
 -->
+      </div>
 </div>
 
 
