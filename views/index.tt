@@ -4,6 +4,8 @@ $(function() {
         source: '/json/lexers'
     });
 });
+
+
 /* ]]> */</script> 
 
 <div id="page">
@@ -23,6 +25,11 @@ $(function() {
 
             syntax: <script type="text/javascript"><!--
             document.write('<input placeholder="search..." id="syntaxes" name="lang" />');
+            if (!Modernizr.input.placeholder) {
+                jQuery(function($) {
+                   $("#syntaxes").Watermark("search...");
+                });
+            }
             --></script>
             <noscript><select name="lang">
             [% foreach lang in syntaxes.keys.sort %]
@@ -47,53 +54,6 @@ $(function() {
 
         </div>
 
-<!--
-    <script type="text/javascript">
-    $('#about_env_link').click(function() {
-        $('#about-content').slideToggle('fast', function() {
-            // ok
-        });
-    });
-    </script>
-
-
-          <ol>          
-            <li>
-              <h2>Tune your application</h2>
-
-              <p>
-              Your application is configured via a global configuration file,
-              <tt>config.yml</tt> and an "environment" configuration file,
-              <tt>environments/development.yml</tt>. Edit those files if you
-              want to change the settings of your application.
-              </p>
-            </li>
-
-            <li>
-              <h2>Add your own routes</h2>
-
-              <p>
-              The default route that displays this page can be removed,
-              it's just here to help you get started. The template used to
-              generate this content is located in 
-              <code>views/index.tt</code>.
-              You can add some routes to <tt>lib/Pastedance.pm</tt>. 
-              </p>
-            </li>
-
-            <li>
-                <h2>Enjoy web development again</h2>
-
-                <p>
-                With the <tt>auto_reload</tt> feature (which is enabled in the
-                <tt>development</tt> environment)
-                you don't even have to restart the standalone webserver to see your changes.
-                </p>
-            </li>
-
-          </ol>
-        </div>
--->
       </div>
 </div>
 
