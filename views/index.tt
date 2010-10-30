@@ -18,7 +18,7 @@ $(function() {
 
         <div id="paste">
 
-            size limit ~ 100kb
+            size limit ~ 100kB
             <form action="/" method="post">
             subject: <input size="60" type="text" name="subject" value="[% subject | html %]"/><br />
 
