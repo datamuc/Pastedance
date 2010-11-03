@@ -20,6 +20,8 @@
 Powered by <a href="http://perldancer.org/">Dancer</a> [% dancer_version %]
 <br />Syntax highlighting is done with <a href="http://pygments.org/">Pygments</a>,
       Thanks to <a href="http://search.cpan.org/dist/Inline-Python">Inline::Python</a>.
+<br />Preferred command line utility is <a href="http://search.cpan.org/dist/App-Nopaste-Service-Pastedance">
+      App::Nopaste::Service::Pastedance</a>
 </div>
 </body>
 </html>
