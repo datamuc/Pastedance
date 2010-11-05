@@ -67,7 +67,7 @@ post '/' => sub {
 
 get '/:id' => sub {
     my $doc = vars->{db}->find_one({id => params->{id}});
-    return e404() unless $doc;
+    return send_error("Not found", 404) unless $doc;
     my $ln = request->params->{ln};
     $ln = defined($ln) ? $ln : 1;
     $doc->{url} = request->uri_for('/');
@@ -80,7 +80,7 @@ get '/:id' => sub {
 
 get '/plain/:id' => sub {
     my $doc = vars->{db}->find_one({id => params->{id}});
-    return e404() unless $doc;
+    return send_error("Not found", 404) unless $doc;
     content_type 'text/plain; charset=UTF-8';
     return encode('UTF-8', $doc->{code});
 };
@@ -120,12 +120,6 @@ sub pygments_highlight {
     my $doc = shift;
     my $ln  = shift;
     return highlight($doc->{code}, $doc->{lang});
-}
-
-sub e404 {
-    status '404';
-    content_type 'text/plain';
-    return "Not found";
 }
 
 1;
