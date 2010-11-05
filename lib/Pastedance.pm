@@ -44,7 +44,7 @@ post '/' => sub {
     my $lang = request->params->{lang};
     my $subject = request->params->{subject};
     unless(length($code)) {
-      return halt("Don't paste no code");
+        return send_error("Don't paste no code!", 403);
     }
 
     my %rlex = reverse %{ get_lexers() };
