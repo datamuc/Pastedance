@@ -77,8 +77,8 @@ get '/:id' => sub {
 get '/plain/:id' => sub {
     my $doc = vars->{db}->find_one({id => params->{id}});
     return send_error("Not found", 404) unless $doc;
-    content_type 'text/plain; charset=UTF-8';
-    return encode('UTF-8', $doc->{code});
+    content_type 'text/plain';
+    return $doc->{code};
 };
 
 get '/lexers/' => sub {
