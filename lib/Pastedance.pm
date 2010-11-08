@@ -12,10 +12,10 @@ our $VERSION='0.007';
 my %expires = %{ config->{expires} };
 
 get '/' => sub {
-        template 'index', {
-            syntaxes => get_lexers(),
-            expires => \%expires,
-        };
+    template 'index', {
+        syntaxes => get_lexers(),
+        expires => \%expires,
+    };
 };
 
 before sub {
@@ -25,14 +25,14 @@ before sub {
 get '/new_from/:id' => sub {
     my $doc = vars->{db}->find_one({id => params->{id}});
     $doc->{subject} ||= params->{id};
-        template 'index', {
-            syntaxes => get_lexers(),
-            expires => \%expires, 
-            code    => $doc->{code},
-            subject => $doc->{subject} =~ /\Are:/i
-                ? $doc->{subject}
-                : "Re: ".$doc->{subject},
-        };
+    template 'index', {
+        syntaxes => get_lexers(),
+        expires => \%expires, 
+        code    => $doc->{code},
+        subject => $doc->{subject} =~ /\Are:/i
+            ? $doc->{subject}
+            : "Re: ".$doc->{subject},
+    };
 };
 
 post '/' => sub {
@@ -92,7 +92,7 @@ get '/json/lexers' => sub {
     my @return;
     while(my ($k,$v) = each %$lexers) {
         push @return, {
-            id => $k,
+            id    => $k,
             label => $k,
             value => $v,
         };
