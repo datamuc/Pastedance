@@ -3,6 +3,7 @@ layout: "main"
 logger: "file"
 template: template_toolkit
 environment: development
+charset: utf-8
 
 engines:
   template_toolkit:

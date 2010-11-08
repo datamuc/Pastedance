@@ -12,12 +12,10 @@ our $VERSION='0.007';
 my %expires = %{ config->{expires} };
 
 get '/' => sub {
-    encode('utf-8',
         template 'index', {
             syntaxes => get_lexers(),
             expires => \%expires,
-        }
-    );
+        };
 };
 
 before sub {
@@ -27,7 +25,6 @@ before sub {
 get '/new_from/:id' => sub {
     my $doc = vars->{db}->find_one({id => params->{id}});
     $doc->{subject} ||= params->{id};
-    encode('utf-8',
         template 'index', {
             syntaxes => get_lexers(),
             expires => \%expires, 
@@ -35,8 +32,7 @@ get '/new_from/:id' => sub {
             subject => $doc->{subject} =~ /\Are:/i
                 ? $doc->{subject}
                 : "Re: ".$doc->{subject},
-        }
-    );
+        };
 };
 
 post '/' => sub {
@@ -75,7 +71,7 @@ get '/:id' => sub {
     $doc->{code} = pygments_highlight($doc, $ln);
     $doc->{'time'} = DateTime->from_epoch( epoch => $doc->{time} ),
     $doc->{expires} = DateTime::Duration->new( seconds => $doc->{expires} ),
-    encode('UTF-8', template 'show', $doc);
+    template 'show', $doc;
 };
 
 get '/plain/:id' => sub {
