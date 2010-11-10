@@ -15,7 +15,6 @@ WriteMakefile(
         'Test::More'     => 0,
         'YAML'           => 0,
         'Dancer'         => 1.1902,
-        'MongoDB'        => 0,
         'Inline::Python' => 0,
         'Data::Uniqid'   => 0,
         'DateTime'       => 0,

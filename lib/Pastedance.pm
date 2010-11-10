@@ -1,6 +1,5 @@
 package Pastedance;
 use Dancer qw(:syntax);
-use MongoDB;
 use DateTime;
 use Data::Uniqid qw/uniqid/;
 use Encode qw/decode encode/;
