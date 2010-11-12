@@ -1,12 +1,13 @@
 use strict;
 use warnings;
 use ExtUtils::MakeMaker;
+use utf8;
 
 WriteMakefile(
     NAME                => 'Pastedance',
     AUTHOR              => q{Danijel Tašov},
     VERSION_FROM        => 'lib/Pastedance.pm',
-    ABSTRACT            => 'Pastebin write with Dancer',
+    ABSTRACT            => 'Dancer driven pastebin'
     ($ExtUtils::MakeMaker::VERSION >= 6.3002
       ? ('LICENSE'=> 'perl')
       : ()),
