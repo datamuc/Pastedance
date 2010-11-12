@@ -21,6 +21,8 @@ Installation
 Running
 =======
 
+    cd bin/
+    cp app.pl ../Pastedance.pl
     ./Pastedance.pl
 
 or one of the other many ways to run a Dancer application. See
