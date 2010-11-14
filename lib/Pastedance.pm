@@ -68,7 +68,6 @@ get '/:id' => sub {
     return send_error("Not found", 404) unless $doc;
     my $ln = request->params->{ln};
     $ln = defined($ln) ? $ln : 1;
-    $doc->{url} = request->uri_for('/');
     $doc->{id}  = params->{id};
     $doc->{code} = pygments_highlight($doc, $ln);
     $doc->{'time'} = DateTime->from_epoch( epoch => $doc->{time} ),
