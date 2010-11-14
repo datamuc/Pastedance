@@ -33,6 +33,12 @@ never
 <script type="text/javascript">/* <![CDATA[ */
 var updateAnchor = function() {
     var anchor = window.location.hash;
+    var jumped = false;
+
+    var jumpTo = function(n) {
+        $("a[href='#l-" + n + "']").get(0).scrollIntoView();
+        jumped = true;
+    };
 
     $("a[href^='#l-']").removeClass("high");
 
@@ -44,14 +50,23 @@ var updateAnchor = function() {
 
         $.each(regions, function(index, value) {
             var range = value.split(':');
+
+            if(range.length < 1 && range.length > 2) {
+                // skip that range, it looks odd
+                return true;
+            }
+
+
             if(range.length == 2) {
-                var from = range[0];
-                var to   = range[1];
+                var from = parseInt(range[0]);
+                var to   = parseInt(range[1]);
                 if(from >= to) {
                     var t = to;
                     to = from;
                     from = t;
                 }
+
+                jumpTo(from);
 
                 for(var i = from; i <= to; i++) {
                     var select = "a[href='#l-" + i + "']";
@@ -60,12 +75,16 @@ var updateAnchor = function() {
             } else {
                 var select = "a[href='#l-" + range[0] + "']";
                 $(select).addClass("high");
+                jumpTo(range[0]);
             }
         }); 
 
     }
-}
-window.onhashchange = updateAnchor;
-updateAnchor();
+};
+
+$(document).ready(function() {
+    window.onhashchange = updateAnchor;
+    updateAnchor();
+});
 /* ]]> */</script>
 
