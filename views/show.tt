@@ -8,7 +8,7 @@
 <div id="paste">
 [% USE date %]
 <p>
-[% base | html %][% id | uri | html %]<br />
+<b>[% base | html %][% id | uri | html %]</b><br />
 <b>Date:</b> [% time.strftime('%Y-%m-%d %H:%M:%S') %]
 <b>Expires:</b>
 [% IF ! expires.is_negative %]
