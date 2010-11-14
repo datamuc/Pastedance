@@ -10,15 +10,18 @@ our $VERSION='0.007';
 
 my %expires = %{ config->{expires} };
 
+before sub {
+    var db => mongo->Pastedance->Pastedance;
+
+    my $stash = Dancer::Template::MyTt->get_engine->context->stash;
+    $stash->set(base => uri_for('/'));
+};
+
 get '/' => sub {
     template 'index', {
         syntaxes => get_lexers(),
         expires => \%expires,
     };
-};
-
-before sub {
-    var db => mongo->Pastedance->Pastedance;
 };
 
 get '/new_from/:id' => sub {

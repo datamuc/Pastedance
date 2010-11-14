@@ -2,7 +2,7 @@
 
       <div id="content">
         <div id="header">
-          <h1><a style="text-decoration: none; color: #000000" href="/">Pastedance</a></h1>
+          <h1><a style="text-decoration: none; color: #000000" href="[% base | html %]">Pastedance</a></h1>
           <h2>Paste your code!</h2>
         </div>
 <div id="paste">
@@ -19,9 +19,9 @@ never
 
 [% IF subject %]
 <b>Subject:</b> [% subject | html %] [% END %]<b>Lang:</b> [% lang %]
-<a href="[% url | html %]plain/[% id | uri | html %]">Plain</a><br />
+<a href="[% base | html %]plain/[% id | uri | html %]">Plain</a><br />
 </p>
-<a href="[% url | html %]new_from/[% id | uri | html %]">Edit</a>
+<a href="[% base | html %]new_from/[% id | uri | html %]">Edit</a>
 <hr />
 <div style="font-family: monospace" class="pygments">
 [% code %]

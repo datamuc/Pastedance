@@ -1,7 +1,7 @@
 <script type="text/javascript">/* <![CDATA[ */
 $(document).ready(function() {
     $("#syntaxes").autocomplete({
-        source: '/json/lexers'
+        source: '[% base %]json/lexers'
     });
 });
 
@@ -19,7 +19,7 @@ $(document).ready(function() {
         <div id="paste">
 
             size limit ~ 100kB
-            <form action="/" method="post">
+            <form action="[% base | html %]" method="post">
             subject: <input size="60" type="text" name="subject" value="[% subject | html %]"/><br />
 
 
