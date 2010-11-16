@@ -70,8 +70,8 @@ get '/:id' => sub {
     $ln = defined($ln) ? $ln : 1;
     $doc->{id}  = params->{id};
     $doc->{code} = pygments_highlight($doc, $ln);
-    $doc->{'time'} = DateTime->from_epoch( epoch => $doc->{time} ),
-    $doc->{expires} = DateTime::Duration->new( seconds => $doc->{expires} ),
+    $doc->{'time'} = DateTime->from_epoch( epoch => $doc->{time} );
+    $doc->{expires} = DateTime::Duration->new( seconds => $doc->{expires} );
     template 'show', $doc;
 };
 
