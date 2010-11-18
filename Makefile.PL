@@ -15,7 +15,7 @@ WriteMakefile(
     PREREQ_PM => {
         'Test::More'     => 0,
         'YAML'           => 0,
-        'Dancer'         => 1.1902,
+        'Dancer'         => 1.200,
         'Inline::Python' => 0,
         'Data::Uniqid'   => 0,
         'DateTime'       => 0,
