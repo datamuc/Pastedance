@@ -16,10 +16,11 @@ expires:
   1 month: 2678400
   never: -1
 
-mongo:
-  host: localhost
-  port: 27017
-  database: Pastedance
-#  auth:
-#    user: someuser
-#    password: somepass
+plugins:
+  Mongo:
+    host: localhost:27017
+    db_name: Pastedance
+    auto_reconnect: 1
+    auto_connect: 1
+    #username: ...
+    #password: ...
