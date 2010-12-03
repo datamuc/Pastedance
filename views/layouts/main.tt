@@ -3,7 +3,6 @@
 <head>
 <meta http-equiv="Content-type" content="text/html; charset=UTF-8" />
 <title>[% "${subject} - " | html IF subject %]Pastedance</title>
-<link rel="stylesheet" href="[% static | html %]css/ribbon.css" type="text/css" />
 <link rel="stylesheet" href="[% static | html %]css/style.css" />
 <link rel="stylesheet" type="text/css" href="[% static %]css/pygments-tango.css" /> 
 <link type="text/css" href="[% static | html %]ui-lightness/jquery.ui.all.css" rel="stylesheet" />
