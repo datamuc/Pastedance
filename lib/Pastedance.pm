@@ -60,7 +60,7 @@ post '/' => sub {
 
     my $doc = {
         id      => uniqid,
-        code    => decode('UTF-8', $code),
+        code    => $code,
         lang    => $lang,
         subject => $subject,
         'time'  => time,
