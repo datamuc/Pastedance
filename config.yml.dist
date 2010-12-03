@@ -1,12 +1,12 @@
 # vim: et ai si sw=2
 layout: "main"
 logger: "file"
-template: MyTt
+template: template_toolkit
 environment: development
 charset: utf-8
 
 engines:
-  MyTt:
+  template_toolkit:
      start_tag: "[%"
      stop_tag: "%]"
 

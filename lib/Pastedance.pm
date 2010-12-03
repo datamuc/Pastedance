@@ -10,11 +10,18 @@ our $VERSION='0.007';
 
 my %expires = %{ config->{expires} };
 
+before_template sub {
+    my $t = shift;
+    $t->{base} = uri_for('/');
+    $t->{static} = uri_for('/static/');
+};
+
 before sub {
     var db => mongo->Pastedance->Pastedance;
 
-    my $stash = Dancer::Template::MyTt->get_engine->context->stash;
-    $stash->set(base => uri_for('/'));
+    #my $stash = Dancer::Template::MyTt->get_engine->context->stash;
+    #$stash->set(base   => uri_for('/'));
+    #$stash->set(static => uri_for('/static/'));
 };
 
 get '/' => sub {
