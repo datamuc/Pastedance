@@ -1,12 +1,12 @@
 # vim: et ai si sw=2
 layout: "main"
 logger: "file"
-template: MyTt
+template: template_toolkit
 environment: development
 charset: utf-8
 
 engines:
-  MyTt:
+  template_toolkit:
      start_tag: "[%"
      stop_tag: "%]"
 
@@ -17,9 +17,10 @@ expires:
   never: -1
 
 plugins:
-  mongo:
-    host: localhost
-    port: 27017
-    database: Pastedance
-#   user: someuser
-#   password: somepass
+  Mongo:
+    host: localhost:27017
+    db_name: Pastedance
+    auto_reconnect: 1
+    auto_connect: 1
+    #username: ...
+    #password: ...

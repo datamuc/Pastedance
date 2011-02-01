@@ -21,7 +21,7 @@ Installation
 Running
 =======
 
-    mv config.yml.dist config.yml
+    cp config.yml.dist config.yml
     cd bin/
     cp app.pl ../Pastedance.pl
     ./Pastedance.pl
