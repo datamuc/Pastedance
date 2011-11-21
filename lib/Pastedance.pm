@@ -10,13 +10,13 @@ our $VERSION='0.007';
 
 my %expires = %{ config->{expires} };
 
-before_template sub {
+hook 'before_template' => sub {
     my $t = shift;
     $t->{base} = uri_for('/');
     $t->{static} = uri_for('/static/');
 };
 
-before sub {
+hook 'before' => sub {
     var db => mongo->Pastedance->Pastedance;
 
     #my $stash = Dancer::Template::MyTt->get_engine->context->stash;
