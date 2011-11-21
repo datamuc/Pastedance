@@ -23,7 +23,7 @@ never
 </p>
 <a href="[% base | html %]new_from/[% id | uri | html %]">Edit</a>
 <hr />
-<div style="font-family: monospace" class="pygments">
+<div style="font-family: monospace; overflow: auto;" class="pygments">
 [% code %]
 </div>
 </div>
