@@ -18,10 +18,6 @@ hook 'before_template' => sub {
 
 hook 'before' => sub {
     var db => mongo->Pastedance->Pastedance;
-
-    #my $stash = Dancer::Template::MyTt->get_engine->context->stash;
-    #$stash->set(base   => uri_for('/'));
-    #$stash->set(static => uri_for('/static/'));
 };
 
 get '/' => sub {
