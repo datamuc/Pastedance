@@ -9,14 +9,12 @@ Prerequisites
   * Inline::Python
     * pygments in your python installation
   * MongoDB
-  * perl bindings for source-highlight:  
-    https://code.launchpad.net/~chust/+junk/SourceHighlight
   * Template::Toolkit
 
 Installation
 ============
 
-    cpan Dancer MongoDB Template DateTime Data::Uniqid
+    cpanm Dancer Dancer::Plugin::Mongo Template DateTime Data::Uniqid
 
     sudo aptitude install python-pygments
     or follow
