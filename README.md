@@ -18,6 +18,10 @@ Installation
 
     cpan Dancer MongoDB Template DateTime Data::Uniqid
 
+    sudo aptitude install python-pygments
+    or follow
+    http://pygments.org/docs/installation/
+
 Running
 =======
 
