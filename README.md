@@ -1,15 +1,16 @@
 Prerequisites
 =============
 
-* source-highlight 3.1
 * perl
   * Dancer
   * DateTime
   * Data::Uniqid
   * Inline::Python
     * pygments in your python installation
-  * MongoDB
+  * Dancer::Plugin::MongoDB
   * Template::Toolkit
+
+And a mongodb of course.
 
 Installation
 ============
