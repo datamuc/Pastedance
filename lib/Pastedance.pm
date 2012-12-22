@@ -15,7 +15,7 @@ hook 'before_template' => sub {
 };
 
 hook 'before' => sub {
-    var db => mongo->Pastedance->Pastedance;
+    var db => mongo->get_database("Pastedance")->get_collection("Pastedance");
 };
 
 get '/' => sub {
@@ -52,15 +52,14 @@ post '/' => sub {
         $lang = "txt";
     }
 
+    my $expires = config->{expires};
     my $doc = {
         id      => uniqid,
         code    => $code,
         lang    => $lang,
         subject => $subject,
         'time'  => time,
-        expires =>
-               config->{expires}->{request->params->{expires}}
-            // config->{expires}->{'1 week'},
+        expires => ( $expires->{request->params->{expires}} // $expires->{'1 week'} ) + 0,
     };
     my $id = vars->{db}->insert($doc);
     redirect request->uri_for($doc->{id});
@@ -92,7 +91,7 @@ get '/lexers/' => sub {
 
 get '/json/lexers' => sub {
     my $term = params->{term} || "";
-    my $lexers = get_lexers(); 
+    my $lexers = get_lexers();
     my @return;
     while(my ($k,$v) = each %$lexers) {
         push @return, {
