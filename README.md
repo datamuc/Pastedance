@@ -1,22 +1,25 @@
 Prerequisites
 =============
 
-* source-highlight 3.1
 * perl
   * Dancer
   * DateTime
   * Data::Uniqid
   * Inline::Python
     * pygments in your python installation
-  * MongoDB
-  * perl bindings for source-highlight:  
-    https://code.launchpad.net/~chust/+junk/SourceHighlight
+  * Dancer::Plugin::MongoDB
   * Template::Toolkit
+
+And a mongodb of course.
 
 Installation
 ============
 
-    cpan Dancer MongoDB Template DateTime Data::Uniqid
+    cpanm Dancer Dancer::Plugin::Mongo Template DateTime Data::Uniqid
+
+    sudo aptitude install python-pygments
+    or follow
+    http://pygments.org/docs/installation/
 
 Running
 =======

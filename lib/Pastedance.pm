@@ -8,8 +8,6 @@ use Dancer::Plugin::Mongo;
 
 our $VERSION='0.007';
 
-my %expires = %{ config->{expires} };
-
 hook 'before_template' => sub {
     my $t = shift;
     $t->{base} = uri_for('/');
@@ -23,7 +21,7 @@ hook 'before' => sub {
 get '/' => sub {
     template 'index', {
         syntaxes => get_lexers(),
-        expires => \%expires,
+        expires => config->{expires},
     };
 };
 
@@ -32,7 +30,7 @@ get '/new_from/:id' => sub {
     $doc->{subject} ||= params->{id};
     template 'index', {
         syntaxes => get_lexers(),
-        expires => \%expires, 
+        expires => config->{expires},
         code    => $doc->{code},
         subject => $doc->{subject} =~ /\Are:/i
             ? $doc->{subject}
@@ -60,7 +58,9 @@ post '/' => sub {
         lang    => $lang,
         subject => $subject,
         'time'  => time,
-        expires => $expires{request->params->{expires}} // $expires{'1 week'},
+        expires =>
+               config->{expires}->{request->params->{expires}}
+            // config->{expires}->{'1 week'},
     };
     my $id = vars->{db}->insert($doc);
     redirect request->uri_for($doc->{id});
