@@ -15,7 +15,7 @@ hook 'before_template' => sub {
 };
 
 hook 'before' => sub {
-    var db => mongo->Pastedance->Pastedance;
+    var db => mongo->get_database('Pastedance')->get_collection('Pastedance');
 };
 
 get '/' => sub {
