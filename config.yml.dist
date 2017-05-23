@@ -1,26 +1,25 @@
 # vim: et ai si sw=2
 layout: "main"
 logger: "file"
-template: template_toolkit
-environment: development
+template: MyTt
+# already set by plackup
+#environment: production
 charset: utf-8
 
 engines:
-  template_toolkit:
+  MyTt:
      start_tag: "[%"
      stop_tag: "%]"
 
 expires:
   1 week: 604800
   1 day: 86400
-  1 month: 2678400
-  never: -1
 
 plugins:
   Mongo:
     host: localhost:27017
     db_name: Pastedance
+#    username: pastedance
+#    password: ....
     auto_reconnect: 1
     auto_connect: 1
-    #username: ...
-    #password: ...
