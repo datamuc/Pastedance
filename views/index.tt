@@ -48,7 +48,7 @@ $(document).ready(function() {
             [% end %]
             </select>
             <input type="submit" value="paste" /><br />
-            <textarea name="code" rows="30" cols="80">[% code | html %]</textarea><br />
+            <textarea name="code" rows="25" cols="80">[% code | html %]</textarea><br />
             <input type="submit" value="paste" /><br />
             </form>
 
